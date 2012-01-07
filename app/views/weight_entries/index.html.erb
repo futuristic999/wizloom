@@ -1,0 +1,29 @@
+<h1>Listing weight_entries</h1>
+
+<table>
+  <tr>
+    <th>Weight</th>
+    <th>Unit</th>
+    <th>Date</th>
+    <th>Note</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @weight_entries.each do |weight_entry| %>
+  <tr>
+    <td><%= weight_entry.weight %></td>
+    <td><%= weight_entry.unit %></td>
+    <td><%= weight_entry.date %></td>
+    <td><%= weight_entry.note %></td>
+    <td><%= link_to 'Show', weight_entry %></td>
+    <td><%= link_to 'Edit', edit_weight_entry_path(weight_entry) %></td>
+    <td><%= link_to 'Destroy', weight_entry, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Weight entry', new_weight_entry_path %>

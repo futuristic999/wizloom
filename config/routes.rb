@@ -1,4 +1,6 @@
 Wizloom::Application.routes.draw do
+  resources :weight_entries
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

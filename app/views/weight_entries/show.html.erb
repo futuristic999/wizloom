@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Weight:</b>
+  <%= @weight_entry.weight %>
+</p>
+
+<p>
+  <b>Unit:</b>
+  <%= @weight_entry.unit %>
+</p>
+
+<p>
+  <b>Note:</b>
+  <%= @weight_entry.note %>
+</p>
+
+
+<%= link_to 'Edit', edit_weight_entry_path(@weight_entry) %> |
+<%= link_to 'Back', weight_entries_path %>

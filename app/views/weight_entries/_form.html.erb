@@ -1,0 +1,33 @@
+<%= form_for(@weight_entry) do |f| %>
+  <% if @weight_entry.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@weight_entry.errors.count, "error") %> prohibited this weight_entry from being saved:</h2>
+
+      <ul>
+      <% @weight_entry.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :weight %><br />
+    <%= f.number_field :weight %>
+  </div>
+  <div class="field">
+    <%= f.label :unit %><br />
+    <%= f.text_field :unit %>
+  </div>
+  <div class="field">
+    <%= f.label :date %><br />
+    <%= f.text_field :date %>
+  </div>
+  <div class="field">
+    <%= f.label :note %><br />
+    <%= f.text_area :note %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
