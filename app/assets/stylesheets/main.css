@@ -1,0 +1,21 @@
+body {
+   font-family: georgia; 
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+
+div#header {
+   height:40px;
+   position:relative;
+   width:auto;
+   z-index:20; 
+   border-bottom: 1px solid #DDD;
+   margin-bottom: 20px;
+}
+div#logo {
+   text-align: left;
+   font-size: 1em;
+}

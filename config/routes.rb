@@ -1,4 +1,8 @@
 Wizloom::Application.routes.draw do
+  get "pages/home"
+
+  get "pages/contact"
+
   resources :weight_entries
 
   # The priority is based upon order of creation:

@@ -2,13 +2,34 @@
 <html>
 <head>
   <title>Wizloom</title>
-  <%= stylesheet_link_tag    "application" %>
+  <%= stylesheet_link_tag 'blueprint/screen', :media => 'screen' %>
+  <%= stylesheet_link_tag 'blueprint/print',  :media => 'print' %>
+  <%= stylesheet_link_tag 'main', :media => 'screen' %>
   <%= javascript_include_tag "application" %>
+
+
   <%= csrf_meta_tags %>
 </head>
-<body>
 
-<%= yield %>
+
+<body>
+<div class="container">
+
+    <div id="header">
+      <div id="logo">
+        Wizloom
+      </div>
+    </div>
+
+    <div id="main_content_container" class="span-17 colborder">
+    	<%= yield %>
+    </div>
+
+    <div id="right_side_container" class="span-4 last">
+        Hello, this is the right side bar.
+        <%= render "shared/project_list" %>
+    </div>
+ </div>
 
 </body>
 </html>
