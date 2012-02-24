@@ -1,0 +1,149 @@
+$(document).ready(function() {
+
+    $(".with_prompt").click(function(){
+        $(this).attr("value", ""); 
+        $(this).removeClass('with_prompt'); 
+    }); 
+
+    $("#add_field").change(function(event) {
+        var selected_type = $("#add_field option:selected").attr("value"); 
+        console.log("add_field clicked, selected=" + selected_type);
+        addNewField(selected_type);
+    });
+
+    $("#save_template_button").click(function(event) {
+        console.log("save_template_button clicked"); 
+        var data = {}; 
+        var templateName = $("#template_name_input").attr("value"); 
+        console.log("templateName="+templateName); 
+        var row = $("tr:first-child"); 
+        console.log("firstRow=" + row.html());
+        var i = 1;
+        while(row) {
+            row = row.next(); 
+            if(row) {
+                var label = row.find('.label_input'); 
+                console.log('label='+label); 
+            }
+        }
+    }); 
+
+    $(".add_field_row").live({
+      /* mousedown: function(){
+	    console.log("add_field_row clicked."); 
+  	    $(".add_field_row").draggable( 
+               {
+                 start: function() {
+                    console.log("dragging started."); 
+                 }
+	       }
+            ); 
+        },
+      */
+        mouseenter: function(){
+            $(this).css('background-color', 'lightgrey'); 
+        },
+	mouseleave: function(){
+	    $(this).css('background-color', 'transparent'); 
+        }
+    }); 
+
+
+    $(".label_display").live({
+        click: function() {
+            console.log("label_display clicked..."); 
+  
+            $(this).css('display', 'none'); 
+            $(this).parent().children('.label_input').css('display', 'inline'); 
+        
+        }
+    }); 
+
+
+    $(".label_input").live({
+
+        focusout: function() {
+            console.log("Mouse left label_input.");
+            var labelDisplayDiv = $(this).parent().children('.label_display'); 
+            labelDisplayDiv.html($(this).attr('value')); 
+            $(this).css('display', 'none'); 
+            labelDisplayDiv.css('display', 'inline'); 
+        }
+     }); 
+    
+    //delete clicked a field
+    $(".delete").live({
+        click: function() {
+            console.log("delete clicked."); 
+            var parent = $(this).parents(".add_field_row");
+	    console.log("parent="+parent); 
+            parent.remove();  
+	}
+    });     
+
+   $(".move_up, .move_down").live({
+        click: function(){
+            console.log("move_up or move_down clicked." ); 
+            var curRow = $(this).parents(".add_field_row");
+            console.log("curRow=" + curRow.css('class')); 
+            console.log('this.parent='+$(this).css('class')); 
+            
+            if($(this).hasClass('move_up')){
+                console.log("move_up called."); 
+                if(curRow.prev()) {
+                    curRow.insertBefore(curRow.prev()); 
+                }
+            } else{
+                console.log("move_down called."); 
+                if (curRow.next()) {
+                     curRow.insertAfter(curRow.next()); 
+                }
+            }
+	}
+   });  
+     
+
+    function addNewField(field_type) {
+        console.log("In addNewField, adding field, type="+field_type);
+        var input = "";
+        switch(field_type)
+        {
+	   case 'text':
+           case 'url':
+	      console.log("it's text field");
+	      input = "<input type='text' class='form_field t_text' />"; 
+	      break;
+
+	   case 'textarea':
+	      console.log("it's textarea");
+	      input = "<textarea class='form_field t_textarea'></textarea>";	
+	      break;
+
+           case 'number':
+	      input = "<input type='text' class='form_field t_number' /> " +
+			"<span class='t_unit_edit'>Add Unit</span>";
+	      break;
+      
+           case 'dropdown':
+ 	      input = "<select class='form_field t_select' >"+
+                        "<option value=''></option>" + 
+                      "</select>";
+              break;
+   
+           case 'datetime':
+               input = "<input type='text' class='form_field t_date' value='/MM/DD/YYYY HH:MM:SS' /> ";  
+	       break;	      
+
+	}
+
+        var newFieldRowTr = $("#row_0").clone(true,true); 
+        console.log("newFiledRowTr="+newFieldRowTr); 
+        var editFieldInputDiv = newFieldRowTr.find(".edit_field_input"); 
+        editFieldInputDiv.html(input); 
+        newFieldRowTr.css("display", "table-row"); 
+        newFieldRowTr.insertAfter($("#controls_row")); 
+    }
+});
+
+
+

@@ -1,0 +1,20 @@
+<div id='editor_container'>
+    <div id='editor_controls'>
+        <select id='select_template'>
+            <option value='Select a Template'>Select a Template</option>
+            <% @templates.each do |template| %>
+                <option value='<%= template.id %>'><%= template.name %></option>
+            <% end %>
+        </select>
+
+        <span id='save_entry_button' class='save_button'>Save</span>
+    </div>
+
+
+    <div id='editor_wrapper'>
+        <div class='template_container'></div>
+    </div>
+</div>
+
+<div id='entries_container'>
+</div>

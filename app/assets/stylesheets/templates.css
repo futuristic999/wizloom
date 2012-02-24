@@ -1,0 +1,114 @@
+
+
+/* CSS for templates controller*/
+
+.template_designer_container {
+    width: inherit;
+    padding: 10px;
+}
+
+
+
+#template_controls_table {
+    padding: 5px; 
+}
+#t_table td{
+  padding: 5px;
+}
+
+.form_label_td {
+  text-align: right;
+}
+
+.form_control_td {
+  text-align: left;
+  width: 20px;
+  font-size: 10px;
+}
+
+.edit_field_label {
+  color: gray;
+  vertical-align: middle;
+}
+
+.t_label {
+  width: 145px;
+}
+.label_input {
+  width: inherit; 
+}
+.edit_field_label:hover {
+  background-color: lightblue;
+}
+
+.label_cell {
+  width: 150px;
+
+}
+
+.t_label {
+  -moz-border-radius: 3px 3px 3px 3px;
+  background-color: #BFBFBF;
+  color: #FFFFFF;
+  font-size: 9.75px;
+  font-weight: bold;
+  padding: 1px 3px 2px;
+  text-shadow: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-align: right;
+}
+
+
+.field_input {
+  color: #FFFFFF;
+  padding: 5px 5px;
+  display: inline;
+  vertical-align: top;
+  
+}
+
+.form_field {
+  min-width: 450px;
+}
+
+.t_textarea {
+  min-height: 120px;
+}
+
+.t_number {
+  min-width: 50px;
+}
+.t_unit {
+  background-color: lightgray;
+  color: gray;
+  font-size: 10px;
+}
+
+.field_control{
+  font-size: 12px;
+  color: lightgray;
+  padding-right: 10px;
+}
+
+
+.list_entries_container {
+  width: 600px;
+}
+
+.list_entries_container li {
+  line-height: 25px;
+  border-bottom: 1px dashed lightgray;
+}
+
+.list_entries_container .template_info {
+}
+.t_controls {
+  padding-left: 300px;
+}
+
+.t_controls span {
+  font-size: 10px;
+  color: #808080;  
+  padding-right: 5px;
+}

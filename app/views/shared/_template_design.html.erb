@@ -1,0 +1,105 @@
+<style>
+
+/*
+  .template_designer_container {
+     min-height: 200px;
+     width: inherit;
+     padding: 10px;
+     border: 1px solid lightgrey;
+  }
+
+  .field_container {
+     height: 50px;
+     margin: 10px;
+     border: 2px dashed lightgrey;
+     padding: 5px;
+  }
+
+  .add_new_button {
+     padding: 5px 10px;
+     text-align: center;
+     border: 1px solid lightgrey;
+     display: inline-block; 
+  }
+  .add_new_button:hover {
+     background-color: lightgrey;
+     color: grey;
+   }
+  .field_label_config {
+     border: 1px dashed lightgray;
+     width: 200px;
+     padding: 5px;
+     height: 30px;
+  }
+  .field_type_config {
+     width: auto;
+     height: 30px;
+     position: relative;
+     border: 1px dashed lightgray;
+  }
+*/
+</style>
+
+
+<div id="template_controls_container" class="template_designer_container">
+
+   
+	<table id="template_controls_table">
+	    <tr id="controls_row">
+            <td style='width:80px'>
+                <input type='text' id='template_name_input' 
+                    name='template_name' value='Enter Template Name' class='with_prompt'></input>
+            </td>
+		    <td>
+		      <select id="add_field">
+			    <option value="select_a_type">Select a Type</option>
+		    	<option value="t_text">Text</option>
+			    <option value="t_textarea">Text Area</option>
+			    <option value="t_number">Number</option>
+                <option value="t_url">URL</option>
+                <option value="t_photo">Photo</option>
+ 			    <option value="t_datetime">Date & Time</option>
+                <option value="t_email">Email</option>
+			    <option value="t_dropdown">Drop Down</option>
+			    <option value="t_checkbox">Check Box</option>
+		      </select>
+		    </td>
+            <td>
+            </td>
+	    </tr>
+
+<!--
+        <tr id='row_0' class='add_field_row_template' style='display:none'>
+            <td class='label_cell' style='70px'>
+               <div id='label_0' class='t_label initial_mode'>Click to Edit Label</div>
+           </td>
+           <td class='form_field_td' style='min-width:120px'>
+                <div class='edit_field_input'>Add Field Input Here</div>
+           </td>
+           <td class='form_control_td'>
+                <span class='field_control delete'><a href='#'>x</a></span>
+                <span class='field_control move_up'><a href='#'>up</a></span>
+                <span class='field_control move_down'><a href='#'>down</a></span>
+           </td>
+        </tr>
+-->                
+        <tr id="save_row">
+            <td>
+                <div id="save_template_button" class="save_button">
+                    Save
+                </div>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+	</table>
+
+
+
+
+</div>
+
+<div id='template_container' class='template_container'>
+   <table class='t_table design_mode'>
+   </table>
+</div>

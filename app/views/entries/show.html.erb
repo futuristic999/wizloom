@@ -1,0 +1,7 @@
+<div id=<%= @entry.id %> class='entry_container'>
+    <div class='entry_title'> <%= @entry.title %> </div>
+
+    <div class='entry_body'>
+        <%= @entry.body.html_safe  %>
+    </div>
+</div>

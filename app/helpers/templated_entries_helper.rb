@@ -1,0 +1,2 @@
+module TemplatedEntriesHelper
+end

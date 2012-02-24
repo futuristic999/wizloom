@@ -1,0 +1,21 @@
+<p>List of Templates</p>
+
+<ul class='list_entries_container'>
+    <% @templates.each do |template| %>
+        <li class='list_item'>
+            <div class='template_info'>
+               <div class='t_details'>
+                    <span class='t_id'><%= template.id %> </span>
+                    <a href='/templates/get/<%= template.id %>'>
+                        <span class='t_name'><%= template.name %></span>
+                    </a>
+               </div>
+               <div class='t_controls'>
+                    <span class='delete'><a href='/templates/delete/<%= template.id %>'>Delete</a></span>
+                    <span class='edit'><a href='/templates/edit/<%= template.id %>'>Edit</a></span>
+                    <span class='create_entry'><a href='/entries/add?template=<%= template.id %>'>Create Entry</a></span> 
+               </div>
+            </div>
+        </li>
+    <% end %>
+</ul>

@@ -1,0 +1,42 @@
+<style>
+
+    .templated_entry_container {
+        border: 1px solid lightgray;
+        padding: 10px;
+    }
+    .templated_entry_table {
+        min-width: 600px;
+     }
+
+    .templated_entry_table td {
+        border: 0;
+     }
+    .templated_entry_table .field_label {
+        text-align: right;
+	max-width: 45px;
+    }
+
+    .add_templated_entry_button {
+	width: 100px;
+	border: 1px solid lightgray;
+	padding: 5px 10px;
+	text-align: center
+    }
+    .add_templated_entry_button:hover {
+	background: lightgrey;
+    }
+
+</style>
+
+
+
+<div class="templated_entry_container">
+    <%= render @template_name %>
+    
+			
+   			 <div class="add_templated_entry_button">
+				<span>Save</span>
+    			</div>
+</div>
+
+
