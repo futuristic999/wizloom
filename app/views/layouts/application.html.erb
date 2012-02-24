@@ -2,34 +2,47 @@
 <html>
 <head>
   <title>WizLoom <%= @title %></title>
-  <%= stylesheet_link_tag 'blueprint/screen', :media => 'screen' %>
-  <%= stylesheet_link_tag 'blueprint/print',  :media => 'print' %>
+  <%= stylesheet_link_tag 'application' %>
+
+  <!--
+  <%= stylesheet_link_tag 'bootstrap', :media => 'screen' %> 
   <%= stylesheet_link_tag 'main', :media => 'screen' %>
-  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag 'jquery_controls', :media => 'screen' %>
+   -->
 
-
+  <!--  <%= javascript_include_tag "application" %> -->
+  <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" %>
+  <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js" %>
+  <%= javascript_include_tag "jquery_ui_controls" %>
+  <%= javascript_include_tag "templates" %>
+  <%= javascript_include_tag "entries" %>
   <%= csrf_meta_tags %>
 </head>
 
 
 <body>
-<div class="container">
 
-    <div id="header">
+  <div id="header"">
       <div id="logo">
         Wizloom
       </div>
-    </div>
+      <div id="views">
+        <%= render "shared/views_header" %>
+      </div>
+  </div>
 
-    <div id="main_content_container" class="span-17 colborder">
+  <div class="container-fluid">
+    <div id="main_content_container" class="content">
+	This is is the main content
     	<%= yield %>
     </div>
 
-    <div id="right_side_container" class="span-4 last">
+    <div id="sidebar" class="sidebar">
         Hello, this is the right side bar.
         <%= render "shared/project_list" %>
     </div>
- </div>
+  </div>
+ 
 
 </body>
 </html>

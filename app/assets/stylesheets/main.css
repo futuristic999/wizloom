@@ -19,3 +19,59 @@ div#logo {
    text-align: left;
    font-size: 1em;
 }
+div#views {
+   margin-top:8px;
+   font-color: #DDD;
+}
+span.view_icon {
+   margin-right: 7px;
+}
+
+.container-fluid > .sidebar {
+   position: absolute;
+   right: 20px;
+   top: 0;
+   width: 220px;
+   min-height: 700px;
+   left: auto;
+   border-left: 1px dashed lightgray;
+}
+
+.container-fluid > .content {
+   margin-right: 240px;
+   margin-left: 10px;
+   padding: 10px;
+   min-height:700px;
+}
+
+ul {
+    list-style: none outside none; 
+}
+
+
+.t_table td{
+    border: 0px; 
+}
+.save_button {
+    border: 1px solid lightgrey; 
+    background-color: whiteSmoke; 
+    text-align: center;
+    font-size: 15px;
+    padding: 5px 10px;
+    width:  100px;
+    margin-top: 5px;
+}
+
+.save_button :hover{ 
+    border: 1px solid grey;
+    background-color: lightgrey;
+
+}
+
+.ui-draggable {
+  border: 2px solid lightgray;
+  cursor: move;
+}
+
+
+
