@@ -1,0 +1,75 @@
+<div id='block_creation_container'>
+
+    <p>Create a New Block</p>
+
+    <%= form_for @block,  :url => { :action => "create"}, :html => {:class=>"nifty_form"}  do |f| %>
+      <div class='form_row'>
+        <div class='form_label'>
+           Entry Type: 
+        </div>
+        <div class='form_field'>
+            <%= f.text_field :entry_type %>
+        </div>
+      </div>
+
+      <div class='form_row'>
+        <div class='form_label'>
+            Template ID:
+        </div>
+        <div class='form_field'>
+            <%= select_tag(:template_id, options_from_collection_for_select(@templates, :id, :name)) %>
+        </div>
+      </div>
+
+
+      <div class='form_row'>
+        <div class='form_label'>
+            View Type: 
+        </div>
+        <div class='form_field'>
+            <%= select_tag(:view_type, options_for_select([
+                        ['List_Full', 'list_full'], 
+                        ['List_Title', 'list_title'],
+                        ['Association','association'],
+                        ["New", "new"]
+                ]
+            )) %>
+        </div>
+      </div>
+
+    
+      <div id='association_options' style='margin-top:20px; boarder: 1px dashed lightgrey;'> 
+        <p>Associated To Template/EntryID</p>
+
+        <!--
+        <div class='form_row'>
+            <div class='form_label'>
+                Associated To Template:
+            </div>
+            <div class='form_field'>
+                <%= select_tag(:asscciate_to_template, options_from_collection_for_select(@templates, :id, :name)) %>
+            </div>
+        </div>a
+       -->
+        <div class='form_row'>
+            <div class='form_label'>
+                Entry ID:
+            </div>
+            <div class='form_field'>
+                    <%= select_tag(:associated_entry_id, options_from_collection_for_select(@entries, :id, :title)) %>
+            </div>
+        </div>
+
+
+      </div>
+
+      <div class='form_row'>
+        <%= submit_tag("Save") %>
+      </div>
+
+    <% end %>    
+
+
+    <div id='block_preview_content'>
+    </div>
+</div>

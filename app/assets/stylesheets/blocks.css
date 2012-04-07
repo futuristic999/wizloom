@@ -1,0 +1,32 @@
+.editor_actions_top{
+    padding: 5px; 
+    margin-bottom: 10px;
+}
+
+#add_blocks_container {
+    padding: 10px 0px;
+    
+}
+
+
+.block_container {
+    border: 1px solid lightgrey;
+    -moz-border-radius: 4px 4px 4px 4px; 
+    min-height: 120px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.add_block_actions {
+    border-bottom: 1px solid lightgrey;
+    background-color: whiteSmoke;
+    font-size: 12px;
+    padding: 5px;
+}
+.preview_content{
+    margin-top: 10px;
+    border: 1px dashed lightgrey;
+    -moz-border-radius: 4px 4px 4px 4px;
+    min-height: 60px;
+}

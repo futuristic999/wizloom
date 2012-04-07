@@ -1,0 +1,22 @@
+<div class='t_list_actions'>
+  <a href='#' 
+     id='<%= field[:list_descriptor_id] %>' 
+     class='add_list_item'>Add to List
+  </a>
+</div>
+
+<div class='t_list_items'>
+  <% if mode=='display' %>
+    <% listItems.each do |entryId, entry| %>
+            <%= render :partial=>"entries/tale_format",
+                       :locals=>{:mode=>'display', :entry=>entry, :template=>@tempplate}  %>
+
+
+    <% end %>
+  <% else %>
+
+  <% end %>
+</div>
+
+
+

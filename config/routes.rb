@@ -1,17 +1,20 @@
 Wizloom::Application.routes.draw do
 
-  get "entries/add"
+  match "boards/new"        => "boards#new"
+  match "boards/get/:id"    => "boards#get"
+  match "boards/create"     => "boards#create"
+  match "boards/list"       => "boards#list"
+  match "boards/delete/:id" => "boards#delete"
 
-  get "entries/show"
+  match "lists/newItem/:id" => "lists#newItem"
+  match "lists/addItem/:id" => "lists#addItem"
 
-  get "templated_entries/add"
-
-  get "templated_entries/show"
-
-  get "templated_entries/delete"
-
-  get "templated_entries/edit"
-
+  match "blocks/new"        => "blocks#new"
+  match "blocks/get/:id"    => "blocks#get"
+  match "blocks/handle/:id/:instruction" => "blocks#handle"
+  match "blocks/create"     => "blocks#create"
+  match "blocks/list"       => "blocks#list"
+  match "blocks/delete/:id" => "blocks#delete"
 
   match "entries"           => "entries#index"
   match "entries/save"      => "entries#save"

@@ -1,3 +1,14 @@
-// Place all the styles related to the entries controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.save_entry_button {
+    border: 1px solid lightgrey;
+    border-radius: 3px 3px 3px 3px;
+    background-color: whiteSmoke;
+    text-align: center;
+    font-size: 12px;
+    padding: 3px 5px;
+    width: 120px;
+}
+
+.t_list_item {
+    margin-bottom: 5px;
+
+}

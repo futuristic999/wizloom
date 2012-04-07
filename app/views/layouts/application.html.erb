@@ -16,6 +16,8 @@
   <%= javascript_include_tag "jquery_ui_controls" %>
   <%= javascript_include_tag "templates" %>
   <%= javascript_include_tag "entries" %>
+  <%= javascript_include_tag "blocks" %>
+  <%= javascript_include_tag "boards" %>
   <%= csrf_meta_tags %>
 </head>
 
@@ -33,7 +35,6 @@
 
   <div class="container-fluid">
     <div id="main_content_container" class="content">
-	This is is the main content
     	<%= yield %>
     </div>
 

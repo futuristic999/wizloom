@@ -1,0 +1,21 @@
+<table id='<%= @template.id %>' class='t_table'>
+  <% @entry.fieldValues.each do |fieldValue| %>
+    <tr id='<%= fieldValue.field.id %>' class='t_field_row'>
+       <td class='label_cell'>
+          <%= fieldValue.field.label %>
+       </td>
+       <td class='input_cell'>
+          <div id='<%= fieldValue.field.id %>' class='field_input'>
+            <%= render :partial=>"fields/#{fieldValue.field[:fieldtype]}", 
+                :locals=>{:mode=>'display', :field=>fieldValue.field, :fieldValue=>fieldValue}  %>
+          </div>
+       </td>
+    </tr>
+  
+
+
+  <% end %>
+
+
+
+</table>

@@ -54,6 +54,7 @@ ul {
 }
 .save_button {
     border: 1px solid lightgrey; 
+    border-radius: 3px 3px 3px 3px;
     background-color: whiteSmoke; 
     text-align: center;
     font-size: 15px;
@@ -68,10 +69,26 @@ ul {
 
 }
 
+.new_button {
+    border: 1px solid lightgrey;
+    border-radius: 3px 3px 3px 3px;
+    background-color: whiteSmoke;
+    text-align: center;
+    font-size:12px;
+    padding: 3px 5px;
+    width: 120px;
+}
 .ui-draggable {
   border: 2px solid lightgray;
   cursor: move;
 }
 
+.form_label {
+  font-size: 12px;
+  margin-bottom: 5px;
+  color: grey; 
+}
 
-
+.form_row {
+  margin-bottom: 10px;
+}

@@ -1,6 +1,13 @@
-<h1>Template#add</h1>
 <p>Create a new Template:</p>
+
 
 <div class="entry_container">
     <%= render 'shared/template_design' %>
 </div>
+
+<div id='template_container' class='template_container design_mode'>
+    <div id='0' class='template'>
+       <%= @template[:cached_html].html_safe %>
+    </div>
+</div>
+                

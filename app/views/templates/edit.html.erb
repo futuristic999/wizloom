@@ -1,0 +1,15 @@
+<p>Edit Template <%= @template.name %></p>
+
+
+
+<div>
+    <%= render 'shared/template_design' %>
+</div>
+
+<div id='template_container' class='template_container design_mode'>
+    <div id='<%= @template.id %>' class='template'>
+        <%= @template[:cached_html].html_safe %>
+    </div>
+</div>
+
+

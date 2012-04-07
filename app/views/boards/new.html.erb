@@ -1,0 +1,43 @@
+<div class='board_container'>
+    
+
+    <div class='create_content'>
+        <p> Create a New Board </p>
+        <div id='board_title_input' class='title_input'>
+            <input type='text' class='title_input' value='New Board' />
+        </div>
+
+       
+       
+       
+        <div id='blocks_design_container' class='blocks_container'>
+                
+              
+            <div id='_block_container' class='block_container' style='display:none'>
+
+
+                <div class='add_block_actions'>       
+
+                    <select class='select_block'>
+                        <option id='0'>Select a Block</option>
+                        <% @blocks.each do |block| %>
+                           <option id='<%= block.id %>'><%= block.name %></option>
+                        <% end %>
+                    </select>
+                </div>
+                <div class='preview_content'>
+                    Preview
+                </div>
+
+                <div class='block_actions_bottom'>
+                    <a class="add_new_block_button" href="">Add a New Block </a>
+                </div>
+            </div>
+        </div>
+        
+        <div id='board_actions'>
+            <div id='save_board_button' class='save_button'>Save Board</div>
+        </div>
+         
+    </div>
+</div>

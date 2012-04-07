@@ -7,7 +7,11 @@
     padding: 10px;
 }
 
-
+.template_container {
+    padding: 5px;
+    max-width:800px;
+    min-width: 450px;
+}
 
 #template_controls_table {
     padding: 5px; 
@@ -59,9 +63,14 @@
   text-align: right;
 }
 
+.title_input {
+ font-size:15px;
+ height: 25px;
+ width: 100%
+}
 
 .field_input {
-  color: #FFFFFF;
+  color: grey;
   padding: 5px 5px;
   display: inline;
   vertical-align: top;
@@ -70,6 +79,7 @@
 
 .form_field {
   min-width: 450px;
+  width: 100%
 }
 
 .t_textarea {
@@ -111,4 +121,46 @@
   font-size: 10px;
   color: #808080;  
   padding-right: 5px;
+}
+
+.field_config_actions{  
+    font-size: 10px;
+    color: gray;
+    margin-top: 5px; 
+    padding: 5px;
+    border: 1px solid lightgray;
+    margin-left: 5px;
+    
+}
+.field_config_actions input{
+    width: 90%;
+}
+.field_config_actions .auto_populate_button {
+    border: 1px solid lightgray;
+    font-size: 12px;
+    padding: 5px;
+    background-color: whitesmoke;
+    margin-bottom: 5px;
+}
+.field_config_actions .enter_options_text {
+    margin-top: 5px;
+}
+
+.entry_actions_container_top {
+    padding: 10px 10px;
+}
+
+.entry_actions_container_bottom {
+    padding: 10px 10px;
+}
+.entry_title_container{
+    padding: 10px 10px;
+}
+.md_label {
+    width: 150px;
+    text-align: right;
+    background-color: whiteSmoke;
+}
+.md_input {
+    margin-left: 160px;
 }

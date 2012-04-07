@@ -1,0 +1,9 @@
+<div class='block_container'>
+  <div class='entries_container'>
+    <% @entries.each do |entry| %>
+        <div class='entry_container'>
+            <a href='/entries/get/<%= entry.id %>'><%= entry[:title] %></a>
+        </div>
+    <% end %>
+  </div>
+</div>

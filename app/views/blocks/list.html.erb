@@ -1,0 +1,19 @@
+<div class='entries_container'>
+    <% @blocks.each do |block| %>
+        <div class='block_container'>
+            <div class='block_title'>
+                <% if block.template != nil %>
+                    <%= block.template.name %>_<%= block.view_type %>
+                   
+                <% else %>
+                    Unknown_template_<%= block.view_type %>
+                <% end %>
+            </div>
+
+            <div class='block_controls'>
+                <a href='/blocks/delete/<%= block.id %>'> Delete</a>
+                <a href='/blocks/get/<%= block.id %>'>View</a>
+            </div>
+        </div>
+    <% end %>
+</div>

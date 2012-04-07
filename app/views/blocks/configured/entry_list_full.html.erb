@@ -1,0 +1,28 @@
+
+<div id='block_container_<%= @block.id %>' class='block_container'>
+  
+  <div class='block_actions'>
+    <a id='<%= @block.view_type %> <%= @block.id %>_<%= @block.template.id %>_<%= @block.associated_entry_id %>' 
+        class='new_list_entry' href='#'>Add a New Entry+</a>
+  </div>
+  
+  <div id='editor_wrapper'>
+      <div class='template_container'></div>
+  </div>
+
+
+  <div class='block_actions_bottom' style='display:none'>
+    <div id=<%= @block.id %> class='save_entry_to_list_button save_button'>Save</div>
+  </div>
+
+  <div class='entries_container'>
+    <% @entries.each do |entry| %>
+        <div id='<%= entry.id %>' class='entry_container'>
+            <%= entry[:body].html_safe %>
+        </div>
+    <% end %>
+  </div>
+
+
+
+</div>
