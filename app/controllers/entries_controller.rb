@@ -13,77 +13,94 @@ class EntriesController < ApplicationController
     @entry = saveEntry(params)
 
 
-=begin
-        templateId = params[:template_id];
-        template = Template.find(templateId)
-         
-        title = "#{template.name} Entry"
-
-        cachedHtml = params[:html]; 
-
-        fieldsData = params[:fields]
-        fieldValues = Array.new
-        fieldsData.each do |label,fieldValue| 
-            fieldValue = FieldValue.new({:label=>label, :value=>fieldValue})
-            puts "fieldValue=#{fieldValue}"
-            fieldValues.push(fieldValue)
-        end
-
-
-        
-        @entry = Entry.new(     :template => template,
-                                 :title => title,
-                                 :body => cachedHtml, 
-                                 :refresh_html => false,
-                                 :creator => 1, 
-                                 :status => "ACTIVE", 
-                                 :fieldValues => fieldValues)
-
-
-
-        @entry.save()=
-=end               
-        entryId = @entry.id
-        puts "entryId=#{entryId}"
-        @template = @entry.template
-        @fieldValues = @entry.fieldValues.includes(:field, :field_metadata)
- 
-        if request.xhr?
-           render :template => "/entries/table_format.html.erb",
-                  :layout => false
-        else
-            render :template => "/entries/table_format.html.erb"
-        end
-
-  end
-
- 
-  def get
-    entryId = params[:id]
-    @entry = Entry.find(entryId)
+    entryId = @entry.id
+    
+    puts "entryId=#{entryId}"
     @template = @entry.template
-    
-      
-    @fieldValues = @entry.fieldValues.includes(:field, :field_metadata) 
-    #@fieldValues.each do |fieldValue|
-       #metadata = fieldValue.metadata
-       #puts "metadata=#{metadata}"
-    
-    #end 
-    @mode = 'display'
-    if request.xhr?
-       render :template => "/entries/table_format.html.erb",
-              :layout => false
-    else 
-        render :template => "/entries/table_format.html.erb"
-    end
-=begin
-    if request.xhr?
-        return :json => {:entry => @entry}
-    else
-        render :template => "/entries/show.html.erb"
+    @fieldValues = @entry.fieldValues.includes(:field, :field_metadata)
+
+    context = params
+    context[:entry_id] = entryId
+    context[:entry] = @entry
+    context[:mode] = 'display'
+=begin 
+    htmlBlocks = Hash.new
+
+    @fieldValues.each do |fieldValue|
+        if fieldValue.field[:fieldtype] == 't_association_list'
+            associatedTemplateId = fieldValue.field.list_descriptor[:item_type_id]
+            associatedEntries = getAssociatedEntries(@entry.id, associatedTemplateId)
+            entriesHtml = getListHtml(associatedEntries)
+            htmlBlocks[fieldValue.id] = getListHtml(associatedEntries)
+        end
+
     end
 =end
+    context[:field_values] = @fieldValues
+    context[:entry]  = @entry
+   #context[:html_blocks] = htmlBlocks
+
+    entryHtml = getEntryHtml(context)
+
+    
+    #redirect_to :controller=>"/entries",
+    #            :action=>"get",
+    #            :id => @entry.id
+
+ 
+    if request.xhr?
+        render :json => {:context=>context, :entry_html => entryHtml }
+    end
+
+ end
+
+  def new
+    
+    template = Template.find(params[:template_id])
+   
+    context = Hash.new
+    context[:mode] = 'new'
+    context[:template_id] = template.id
+   
+    entry = Entry.new
+    entry.template_id = params[:template_id]
+    entry.title = params[:title]
+    entry.entry_type = 'templated'
+
+
+    template.fields.each do |field|
+        fieldValue = FieldValue.new(:attributes=>{:field_id=>field.id, :value=>''})
+        entry.fieldValues.push(fieldValue)
+     end
+
+    entry.save
+    context[:entry_id] = entry.id
+     
+    entryHtml = getEntryHtml(context)
+    
+
+
+    if request.xhr?
+        render :json => {:entry_html => entryHtml, :context=>context }
+    end
+        
+  end
+ 
+  def get
+    puts "In entries#get, params=#{params}"
+    context = params
+    context[:entry_id] = params[:id]
+    context[:mode] = 'display'
+    context[:view_type] = "table"
+
+    @entryHtml = getEntryHtml(context)
+    if request.xhr? 
+        render :json => {:html => @entryHtml, :context => context}
+    else
+        render :template => "/entries/get.html.erb"
+
+    end
+
   end
 
 

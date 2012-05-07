@@ -7,16 +7,18 @@ Wizloom::Application.routes.draw do
   match "boards/delete/:id" => "boards#delete"
 
   match "lists/newItem/:id" => "lists#newItem"
-  match "lists/addItem/:id" => "lists#addItem"
+  match "lists/saveItem/:id" => "lists#saveItem"
 
   match "blocks/new"        => "blocks#new"
   match "blocks/get/:id"    => "blocks#get"
+  match "blocks/handle"     => "blocks#handle"
   match "blocks/handle/:id/:instruction" => "blocks#handle"
   match "blocks/create"     => "blocks#create"
   match "blocks/list"       => "blocks#list"
   match "blocks/delete/:id" => "blocks#delete"
 
   match "entries"           => "entries#index"
+  match "entries/new"       => "entries#new"
   match "entries/save"      => "entries#save"
   match "entries/get/:id"   => "entries#get"
   match "entries/list"      => "entries#list"

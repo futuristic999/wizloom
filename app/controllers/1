@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::Base
 
     helper :all
-    helper_method :getListHtml
-
 
     def saveEntry(params)
         puts "ApplicationController.saveEntry called. params=#{params}"
@@ -141,20 +139,13 @@ class ApplicationController < ActionController::Base
     end
     
     def getEntryHtml(params)
-        if params.has_key?(:entry) 
-            @entry = params[:entry]    
-            @fieldValues = params[:field_values]
-        else    
-            entryId = params[:entry_id] 
-            @entry = Entry.find(entryId)
-            @fieldValues = @entry.fieldValues.includes(:field, :field_metadata)
-        end
-
+        entryId = params[:entry_id] 
+        @entry = Entry.find(entryId)
         viewType = params['view_type']
         mode = params[:mode]
         
         context = params
-=begin
+
         if @entry.entry_type == 'list'
             listDescriptor = JSON.parse(@entry.descriptor)
             @entries = getListEntries(listDescriptor)
@@ -172,51 +163,35 @@ class ApplicationController < ActionController::Base
             )
         end
 
-=end            
+            
                
 
         if @entry.entry_type == 'templated'
             @context = params
             @fields = @entry.template.fields
+            @fieldValues = @entry.fieldValues.includes(:field, :field_metadata)
             @template = @entry.template            
             @mode = mode
              
              
             @context[:params_url] = paramsToUrl(@context)
-            
             puts "@context[:params_url] =  #{@context[:params_url]}"
             
-            if @context.has_key?(:main_view_type) == false
-                @context[:main_view_type] = @context[:view_type]  
-            end 
-
-            if @context.has_key?(:view_type)
-                template = "/entries/#{@context[:view_type]}_format.html.erb"
+            fieldValues.each do |fieldValue| 
+                if fieldValue.field[:fieldtype] == '_t_association_list'
+                  associatedTemplateId = fieldValue.field.list_descriptor[:item_type_id]
+                  associatedEntries = getAssociatedEntries(@entry.id, associatedTemplateId)
+                  fieldValue[:html] = getListHtml(associatedEntries)
+                end
+            end
+         
+            if context.has_key?(:view_type)
+                    template = "/entries/#{@context[:view_type]}_format.html.erb"
     
             else
                 template = "/entries/table_format.html.erb"
             end
-            puts "template is #{template}" 
-            
-            @fieldValues.each do |fieldValue| 
-                puts "*** fieldValue.id=#{fieldValue.id}, fieldId=#{fieldValue.field.id}"
-                if fieldValue.field[:fieldtype] == 't_association_list'
-                  puts "fieldValue.field[:fieldtype] is _t_association_list"
-                  associatedTemplateId = fieldValue.field.list_descriptor[:item_type_id]
-                  associatedEntries = getAssociatedEntries(@entry.id, associatedTemplateId)
-                  puts "associatedEntries=#{associatedEntries}"
-                  fieldKey = "field_#{fieldValue.id}"
-                  @context[fieldKey.to_sym] = Hash.new
-                  listContext = Hash.new
-                  listContext[:mode] = 'display'
-                  @context[fieldKey.to_sym][:associated_entries] = associatedEntries
-                  #entriesHtml = getListHtml(associatedEntries)
-                  #fieldValue[:html] = getListHtml(associatedEntries)
-                end
-            end
-            
-            #template = "/entries/#{@context[:main_view_type]}_format.html.erb"; 
-            puts "Before rendering, @context[fieldValue.id]=#{@context}"
+
             entryHtml = render_to_string( 
                       :template => template,
                       :layout => false
@@ -228,16 +203,12 @@ class ApplicationController < ActionController::Base
     end
 
 
-
-    def getListHtml(entries, context)
-        puts "--------------------in getListHtml() --------------------"
+    def getListHtml(entries)
+        params = {:view_type=>"list_full"}
         html = ""
         entries.each do |entry| 
-            params = {:entry_id=>entry.id, :view_type=>"list_full", :mode=>"display"}
-            html = html + getEntryHtml(params)
+            html = html + getEntryHtml(entry)
         end
-        puts "---------------------end of getListHtml() ---------------"
-        puts "html=#{html}" 
         return html
     end
 

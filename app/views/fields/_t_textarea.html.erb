@@ -1,1 +1,5 @@
-<textarea id=<%= field.id %> class='form_field'></textarea>
+<% if context[:mode] == 'display' %>
+   <%= fieldValue[:value].html_safe %>
+<% else %>
+    <textarea id='0' class='form_field'></textarea>
+<% end %>

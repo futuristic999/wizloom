@@ -37,39 +37,34 @@ class TemplatesController < ApplicationController
   def get
     puts "In get..."
 
+    context = params[:context]
+    @context = params
+    @context[:template_id] = params[:id]
 
     @template = Template.find(params[:id])
     fields = @template.fields.includes(:list_descriptor)
 
-    listFields = @template.fields.where(:fieldtype=>'t_list')
-    listFields.each do |listField|
-      listItemType = listField[:list_item_type]
-      if listItemType == 'Entry'
-         #listItems = getListItems(
-      else
-          fieldType = listField[:list_item_descriptor]  
-      end 
-
-    end
 
     @fieldValues = Hash.new
     @mode = 'input'
+   
+    paramsUrl = ""; 
+    params.each do |key,value|
+        if key!='controller' && key !='action'
+            paramsUrl = "#{paramsUrl}&#{key}=#{value}"
+        end
+    end
 
+    puts "paramsUrl=#{paramsUrl}"
+
+    @context[:params_url] = paramsUrl
+
+    html  = render_to_string(:template => "templates/table_format.html.erb", :layout=>false); 
+     
     if request.xhr?
         
-
-        #html = getHtml("#{Rails.root}/app/views/templates/table_format.html.erb", fields)
-        #@template[:cached_html] = html
-=begin
-        render :json => {
-                     :template => @template 
-                    }
-=end        
-        render :template => "templates/table_format.html.erb",
-               :layout => false
-    else 
-        render :template=> "templates/table_format.html.erb"
-        
+        render :json => {:context => @context, :html=>html}
+         
     end
   end
 
@@ -123,7 +118,7 @@ class TemplatesController < ApplicationController
                 fieldData.delete(:list_descriptor)
 
                 field = Field.new(fieldData)
-                if listDescriptor.empty? == false
+                if listDescriptor != nil
                     field.list_descriptor = ListDescriptor.new(:attributes=>listDescriptor)
                 end
                 puts "field.id=#{field.id}"

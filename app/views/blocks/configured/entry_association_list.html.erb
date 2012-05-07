@@ -1,0 +1,22 @@
+<div id='block-container-<%= @block.id %>' class='block-container'>
+  <div class='block-container-actions'>
+    <a href='/blocks/handle?instruction=save&block_id=<%= @block.id %>' id='' class='add-list-item add-button'>Add an Entry</a>
+    <div id='<%= @block.template.id %>' class='template_container' style='display:none'>
+            <%= params[:editorHtml].html_safe %>
+
+
+    </div>
+  </div>
+  
+  
+
+  <div class='entries_container'>
+    <% if params.has_key?(:entries) %>
+      <% params[:entries].each do |entry| %>
+        <div class='list-item-container'>
+            <a href='/entries/get/<%= entry.id %>' class='entry-link'><%= entry.title %></a>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

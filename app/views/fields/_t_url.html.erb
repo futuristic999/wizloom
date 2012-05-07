@@ -1,15 +1,11 @@
-  <div class='composite_field'>
-    <div class='md_label'>
-        URL
-    </div>
-    <div class='md_input'>
+        
         <% if mode=='display' %>
-           Location is <%= fieldValue.metadata[:location] %>
+           <a href='<%= fieldValue[:value] %>' id=''><%= fieldValue[:value] %></a>
         <% else %>
-           <input id=<%= field.id %>_location class='form_field' type='text'></input>
+           <input id=<%= field.id %> class='form_field t_url' type='text'></input>
         <% end %>
-    </div>
 
+    <div class='field_metadata' style='display:none'>
     <div class='md_label'>
         Name
     </div>
@@ -32,4 +28,5 @@
             <input id=<%= field.id %>_description class='form_field' type='text'></input>
         <% end %>
     </div>
-  </div>
+
+    </div>

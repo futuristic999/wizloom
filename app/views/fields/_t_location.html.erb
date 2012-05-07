@@ -1,14 +1,9 @@
   <div class='composite_field'>
-    <div class='md_label'>
-        Location
-    </div>
-    <div class='md_input'>
         <% if mode=='display' %>
-           Location is <%= fieldValue.metadata[:location] %>
+           <%= fieldValue.metadata[:location] %>
         <% else %>
            <input id=<%= field.id %>_location class='form_field' type='text'></input>
         <% end %>
-    </div>
 
     <div class='map'>
     </div>

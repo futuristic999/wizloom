@@ -1,0 +1,17 @@
+<div class='t_list_actions'>
+  <a href='/templates/get/<%= field.list_descriptor[:item_type_id] %>?view_type=list_full&list_id=<%= field.id %>&entry_id=0&p_template_id=<%= context[:template_id] %>&p_entry_id=<%= context[:entry_id] %>&p_field_id=<%= field.id  %>' class='add_list_item'>Add to List
+  </a>
+</div>
+
+<div id='t_list_items_<%= field.id  %>' class='t_list_items'>
+  <% if context[:mode] == 'display' %>
+   <% fieldKey = "field_#{fieldValue.id}" %>
+   <% entries = context[fieldKey][:associated_entries] %>
+   <%= getListHtml(context[fieldKey][:associated_entries], context).html_safe %>
+  <% else %>
+
+  <% end %>
+</div>
+
+
+

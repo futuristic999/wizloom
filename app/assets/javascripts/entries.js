@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    var primaryEntryId = 0; 
+
     console.log("In entries.js document ready()");
 
 
@@ -11,25 +13,86 @@ $(document).ready(function() {
     }), 
 
 
-    $("#save_entry_button").click(function(){
+    $(".save_entry_button").live({
+    
+       click: function(event){
+        event.preventDefault(); 
         console.log("save_entry_button clicked."); 
-        var data = processHtml();
+        var url = $(this).attr("href"); 
+        console.log("url="+url); 
 
+        var id = $(this).attr("id"); 
+        var tokens = id.split("_"); 
+
+        var templateId = tokens[tokens.length-2]; 
+        var entryId = tokens[tokens.length-1]; 
+        console.log("entryId="+ entryId); 
+        
+        //var templateId = "template_container_" + id; 
+
+        //var templateContainerDiv = $("#" + templateId); 
+        //console.log("templateContainerDiv.id="+templateContainerDiv.attr("id")); 
+
+
+        //var data = processHtml(templateContainerDiv);
+        var entryContainer = $("#entry_container_" + entryId); 
+        var templateContainer = entryContainer.children(".template_container"); 
+        console.log("entryContainer="+entryContainer.html()); 
+        console.log("templateContainer=" + templateContainer); 
+        console.log("templateContainer.html=" + templateContainer.html());  
+        var data = processHtml(templateContainer); 
+        data['entry_id'] = entryId;
+        data['template_id'] = templateId; 
         
         $.ajax({
-            url: "/entries/save",
+            url: url,
             type: "POST",
-            data: data, 
+            data: data,
+            //dataType: 'script', 
             success: function(data) {
-                //var entry = data['entry'];
-                var entry = {}; 
-                entry['body'] = data;
-                var entryContainer = $("<div></div>").addClass('entry_contaner').html(entry['body']); 
-                $("#entries_container").prepend(entryContainer); 
-                $("#editor_wrapper").css("display", "none");  
+                var context = data['context']; 
+                if (context['view_type'].indexOf('list')!=-1){
+                    console.log("Is list"); 
+                    var templateId = context['template_id']; 
+                    var templateContainer = $('#'+'template_container_'+templateId); 
+                    templateContainer.remove(); 
+                     
+                    var listId = context['list_id']; 
+                    var listContainerId = "t_list_items_" + listId;
+                    console.log("listContainerId="+listContainerId);
+                    var listContainer = $('#'+listContainerId); 
+                    console.log("listContainer=" + listContainer);
+                    $('#'+listContainerId).append(data['entry_html']);
+                    //$("#dialog").dialog("close"); 
+                }
+                else {
+                    console.log("In else"); 
+                    var entryId = data['context']['entry_id']; 
+                    var entryHtml = data['entry_html']; 
+
+                    var entryContainer = $("<div></div>").addClass('entry_contaner'); 
+                    entryContainer.attr("id", "entry_container_" + entryId); 
+                    var templateContainer = $("<div></div>").addClass("template_container").html(entryHtml); 
+                    templateContainer.attr("id", "template_container_"+ data["context"]["template_id"]); 
+
+                    entryContainer.append(templateContainer);
+                    console.log("entryContainer.html=" + entryContainer.html()); 
+
+                    var curEntryContainer = $("#editor_wrapper").children(".entry_container"); 
+                    console.log("curEntryContainer="+ curEntryContainer);     
+
+                    if (curEntryContainer != null) {    
+                        console.log("curEntryContainer!=null"); 
+                        curEntryContainer.remove();
+                    } 
+                    $("#editor_wrapper").prepend(entryContainer); 
+
+                    //$("#editor_wrapper").css("display", "none");  
+                }
             }
 
         })
+       }
         
     }), 
 
@@ -53,17 +116,36 @@ $(document).ready(function() {
    $(".add_list_item").live({
        click: function(event) {
         event.preventDefault(); 
-        console.log('add_list_item clicked.'); 
-        var listId = $(this).attr("id");
-        console.log('listId='+listId); 
-       
+        console.log('add_list_item clicked.');
+        
+        var listId; 
+        var fieldId;
+         
+        var ids = $(this).attr("id");
+        saveUrl = $(this).attr("href"); 
+               
+
         $.ajax({
-           url: "/lists/newItem/" + listId,
+           url: saveUrl,
            type: "GET",
            success: function(data) {
              console.log("Ajax success for /lists/get");   
-             var templateNode = $(data); 
-             $(event.target).parent().append(templateNode);  
+             var templateHtml = data['html']; 
+             var curEntryContainer = $("#entry_container_0"); 
+             if (curEntryContainer != null) {
+                curEntryContainer.remove(); 
+             }
+             var entryContainer = $("<div></div>").attr("class", "entry_container new_entry"); 
+             entryContainer.attr("id", "entry_container_0"); 
+             
+             var editorWrapper = $("<div></div>").html(templateHtml); 
+             editorWrapper.attr("class", "template_container");
+             editorWrapper.attr("id", "template_container_"+data['context']['template_id']); 
+             
+             entryContainer.append(editorWrapper); 
+              
+             entryContainer.dialog({height:550, width:800});  
+             //$(event.target).parent().append(editorWrapper);  
            }
 
 
@@ -83,47 +165,71 @@ $(document).ready(function() {
 
 }); 
 
+
+
+
+
 function showTemplate(templateId, parentContainer){
 
         $.ajax({
-            url: "/templates/get/"+templateId,
+           // url: "/templates/get/"+templateId,
+            url: "/entries/new?template_id="+templateId+"&create=true&title='New Entry for Template "+templateId+"'",
             type: "GET", 
             success: function(data) {
-               // var template = data["template"]; 
-                var templateHtml = data;
-                var templateContainerDiv = $("<div></div>").addClass("template_container"); 
-                templateContainerDiv.attr("id", templateId).html(templateHtml);   
-               
-                parentContainer.children().replaceWith(templateContainerDiv); 
+                var context = data['context']; 
+                var entryId = context['entry_id']; 
+                var entryHtml = data['entry_html'];
+                
+                var entryContainer = $("<div></div>").addClass("entry_container"); 
+                entryContainer.attr("id", "entry_container_" + entryId); 
+                
+                var templateContainer = $("<div></div>").addClass("template_container").html(entryHtml);  
+                templateContainer.attr("id", "template_container_" + context["template_id"]); 
+
+                entryContainer.append(templateContainer); 
+                //var templateContainerDiv = $("<div></div>").addClass("template_container"); 
+                //templateContainerDiv.attr("id", "template_container_"+templateId).html(templateHtml);   
+                //parentContainer.children().replaceWith(templateContainerDiv); 
+                
+                parentContainer.append(entryContainer); 
                 parentContainer.css("display", "block"); 
                  
-                //$("#editor_wrapper").children().replaceWith(templateContainerDiv); 
-                //$("#editor_wrapper").css("display", "block"); 
             }
         })
 }
 
-function processHtml() {
+function processHtml(templateContainerDiv) {
   var data = {};
-  var fields = {}; 
-  var editorDiv = $("#editor_wrapper");
+  var fields = {};    
+  //var editorDiv = $("#editor_wrapper");
 
-  var templateContainerDiv = editorDiv.children('.template_container');
-  console.log("templateContainerDiv= "+templateContainerDiv);
+  //var templateContainerDiv = editorDiv.children('.template_container');
+  //console.log("templateContainerDiv= "+templateContainerDiv);
 
-  var templateId = templateContainerDiv.attr("id");
+  var tokens = templateContainerDiv.attr("id").split("_"); 
+  var templateId = tokens[tokens.length-1]; 
   console.log("templateId="+templateId);
+  
+  console.log(templateContainerDiv); 
 
   var formFields = templateContainerDiv.find('.form_field'); 
   var i;
   console.log('formFields.length='+formFields.length);  
   for (i=0; i<formFields.length; i++) {
     var formField = formFields[i]; 
-    console.log(formField); 
-    var fieldId = $(formField).attr('id'); 
-    console.log('fieldId='+fieldId);
+    console.log(formField);
+     
+    var fieldValueId = $(formField).attr('id'); 
+    console.log('fieldValueId='+fieldValueId);
+
     var fieldValue = $(formField).val(); 
     console.log('fieldValue='+fieldValue); 
+    
+    var fieldInput = $(formField).parents(".field_input"); 
+    console.log("fieldInput = "+ fieldInput); 
+    var fieldId = fieldInput.attr('id'); 
+    console.log("fieldId=" + fieldId); 
+    
     var mdKey; 
     var mdValue;
 
@@ -137,11 +243,14 @@ function processHtml() {
     
     if (fields[fieldId] == null) {
       fields[fieldId] = {}; 
+      //fields[fieldId]['fieldvalue_id'] = 0; 
       fields[fieldId]['metadata'] = {};     
     }
 
-    fields[fieldId]['metadata'][mdKey] = fieldValue;
+        //fields[fieldId]['metadata'][mdKey] = fieldValue;
     fields[fieldId]['value'] = fieldValue;
+    fields[fieldId]['fieldvalue_id'] = fieldValueId;
+   
      
   }
 
@@ -150,6 +259,14 @@ function processHtml() {
 
   return data;
 }
+
+
+function addListEntry(listId, entryHtml) {
+    console.log("In addListEntry()"); 
+    $("#"+listId).appendChild($(entryHtml)); 
+    
+}
+
     
 function processHtmlOld(){
     var data = {}; 

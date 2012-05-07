@@ -1,0 +1,15 @@
+<div id='block-container-<%= @block.id %>' class='block-container main-block'>
+
+   <div class='entry_actions_container_top'>
+     <% if params[:mode] =='display' %>
+        <a href='' id='' class='edit-button'>Edit</a>
+     <% end %>    
+   </div>   
+
+   
+    <div id='editor_wrapper'>
+         <div class='template_container' id='<%=@block.template.id %>'>
+            <%= params[:editorHtml].html_safe %>
+        </div>
+    </div>
+</div>

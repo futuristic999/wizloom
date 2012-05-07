@@ -1,13 +1,19 @@
 
 <table id='<%= @template.id %>' class='t_table'>
   <% @template.fields.each do |field| %>
+    <% @context[:context] = 'field' %>
     <tr id='<%= field.id %>' class='t_field_row'>
        <td class='label_cell'>
           <%= field.label %>
        </td>
        <td class='input_cell'>
           <div id='<%= field.id %>' class='field_input'>
-            <%= render :partial=>"fields/#{field[:fieldtype]}", :locals=>{:mode=>@mode, :field=>field, :fieldValues=>@fieldValues}  %>
+            <%= render :partial=>"fields/#{field[:fieldtype]}", :locals=>{
+                :mode=>@mode, 
+                :field=>field, 
+                :fieldValues=>@fieldValues,
+                :context => @context
+            }  %>
           </div>
        </td>
     </tr>
@@ -19,3 +25,7 @@
 
 
 </table>
+
+<div class='template_actions'>
+        <a href='/entries/save?<%= @context[:params_url] %>' id='save_entry_button_<%= @template.id %>_0' class='save_entry_button'>Save</a> 
+</div>

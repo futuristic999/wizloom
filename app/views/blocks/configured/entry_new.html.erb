@@ -1,31 +1,17 @@
-<div id='block_container_<%= @block.id %>' class='block_container'>
+<div id='block-container-<%= @block.id %>' class='block-container'>
 
    <div class='entry_actions_container_top'>
-        <div id='new_entry_button' class='new_button' %>New Entry +</div>
+    
+     Block Name: <%= @block.name %>
    </div>   
 
    
     <div id='editor_wrapper'>
-       <% if @mode == 'editor' %>
          <div class='template_container' id='<%=@block.template.id %>'>
-            <div class='entry_title_container'>
-                <input type='text' name='title' class='title_input' value='<%= @block.template.name %> Entry'/>
-            </div>
 
-            <%= @block.template.cached_html.html_safe %>
-
-            <div class='entry_actions_container_bottom'>
-                <div id='<%= @block.id %>' class='save_entry_button'>Save</div>
-            </div>
+            <%= render :partial=>"templates/table_format", :locals=>{:mode=>@mode, 
+                            :template=>@block.template, :saveUrl => @saveUrl, :saveButtonClass=>@saveButtonClass} 
+             %>
         </div>
-
-      <% end %>
-
-      <% if @mode == 'display' %>
-        <div class='entry_container' id='<%= @entry.id %>'>
-            <%= @entry.body %>
-        </div>
-      <% end %>
-
     </div>
 </div>

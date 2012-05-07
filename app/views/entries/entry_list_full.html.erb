@@ -1,0 +1,22 @@
+  <div class='list-actions'>
+    <a href='<%= params[:saveUrl] %>' id='' class='add-list-item add-button'>Add an Entry</a>
+  </div>
+  <div class='list-container'>
+    <% @entries.each do |entry| %>
+        <div class='list-item-container'>
+            <div class='list-item-title'>
+                <a href='/entries/get/<%= entry.id %>'><%= entry[:title] %></a>
+            </div>
+            <div class='list-item-content'>
+                <% entry.fieldValues.each do |fieldValue| %>
+                   <div class='field-label'>
+                        <%= fieldValue.field.label %>
+                   </div> 
+                   <div class='field-value'>
+                        <%= fieldValue.value %>
+                   </div>
+                <% end %>
+            </div>
+        </div>
+    <% end %>
+  </div>

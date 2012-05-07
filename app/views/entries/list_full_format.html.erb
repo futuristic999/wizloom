@@ -1,3 +1,6 @@
+<div id='list_item_<%= @entry.id %>' class='list_item'>
+    <div id='list_entry_container_<%= @entry.id %>' class='list_entry_container'>
+
 <table id='<%= @template.id %>' class='t_table'>
   <% @entry.fieldValues.each do |fieldValue| %>
     <tr id='<%= fieldValue.field.id %>' class='t_field_row'>
@@ -7,7 +10,7 @@
        <td class='input_cell'>
           <div id='<%= fieldValue.field.id %>' class='field_input'>
             <%= render :partial=>"fields/#{fieldValue.field[:fieldtype]}", 
-                :locals=>{:field=>fieldValue.field, :fieldValue=>fieldValue, :context=>@context}  %>
+                :locals=>{:mode=>'display', :field=>fieldValue.field, :fieldValue=>fieldValue, :context=>@context}  %>
           </div>
        </td>
     </tr>
@@ -19,8 +22,5 @@
 
 
 </table>
-
-<div class='template_actions'>
-        <a href='/entries/save?view_type=table&template_id=<%= @template.id  %>&entry_id=<%= @context[:entry_id] %>' id='save_entry_button_<%= @context[:template_id] %>_<%= @context[:entry_id] %>' class='save_entry_button'>Save</a>
 </div>
-
+</div>

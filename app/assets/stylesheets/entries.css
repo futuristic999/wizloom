@@ -12,3 +12,9 @@
     margin-bottom: 5px;
 
 }
+
+.list_entry_container {
+    border-bottom: 1px solid lightgrey;
+    margin-bottom: 5px;
+}
+

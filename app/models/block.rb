@@ -1,4 +1,7 @@
 class Block < ActiveRecord::Base
-    has_and_belongs_to_many :boards, :join_table => "board_blocks"
+    has_many :board_blocks, 
+             :foreign_key => "block_id",
+             :class_name=>"BoardBlock"
+
     belongs_to :template
 end

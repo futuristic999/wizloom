@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120405232822) do
+ActiveRecord::Schema.define(:version => 20120413230214) do
 
   create_table "blocks", :force => true do |t|
     t.string   "entry_type"
@@ -24,9 +24,11 @@ ActiveRecord::Schema.define(:version => 20120405232822) do
     t.integer  "entry_id"
     t.string   "name"
     t.integer  "associated_entry_id"
+    t.boolean  "is_primary_block"
+    t.string   "block_type"
   end
 
-  create_table "board_blocks", :id => false, :force => true do |t|
+  create_table "board_blocks", :force => true do |t|
     t.integer "board_id"
     t.integer "block_id"
     t.integer "display_order"
@@ -57,6 +59,8 @@ ActiveRecord::Schema.define(:version => 20120405232822) do
     t.integer  "template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "entry_type"
+    t.string   "descriptor"
   end
 
   add_index "entries", ["fieldvalues_id"], :name => "index_entries_on_fieldvalues_id"

@@ -1,5 +1,13 @@
 module EntriesHelper
+=begin
 
+    def getListHtml(entries)
+        puts "Inside helper method getListHtml"
+
+    end
+=end
+
+=begin
     def saveEntry
         puts '@@@@@@ EntriesHelper.saveEntry(), params=#{params}'
         templateId = params[:template_id];
@@ -35,5 +43,7 @@ module EntriesHelper
     def getFieldInputHtml(field)
         puts "EntriesHelper.getFieldInputHtml called."
     end
+=end
+
 
 end

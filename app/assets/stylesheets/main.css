@@ -7,6 +7,10 @@ h1 {
   margin-bottom: 1em;
 }
 
+.ui-dialog {
+  background: whiteSmoke; 
+
+}
 div#header {
    height:40px;
    position:relative;
@@ -52,6 +56,13 @@ ul {
 .t_table td{
     border: 0px; 
 }
+
+.list-item-container {
+    margin-bottom: 5px;
+    padding: 5px;
+    border-bottom: 1px solid lightgrey;
+
+}
 .save_button {
     border: 1px solid lightgrey; 
     border-radius: 3px 3px 3px 3px;
@@ -77,6 +88,18 @@ ul {
     font-size:12px;
     padding: 3px 5px;
     width: 120px;
+}
+.add-button {
+    border: 1px solid lightgrey;
+    border-radius: 3px 3px 3px 3px;
+    background-color: whiteSmoke;
+    text-align: center;
+    font-size: 11px;
+    padding: 3px 7px;
+    width: 150px;
+
+
+
 }
 .ui-draggable {
   border: 2px solid lightgray;

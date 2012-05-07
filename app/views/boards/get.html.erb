@@ -1,2 +1,25 @@
-<h1>Boards#get</h1>
-<p>Find me in app/views/boards/get.html.erb</p>
+<script>
+  $(document).ready(function() {
+    console.log("This is the javascript embedded in boards/get.html.erb"); 
+    var boardContainer = $('.board-container'); 
+    boardContainer.data("main_entry_id", <%= @mainEntryId %>); 
+    boardContainer.data("main_block_id", <%= @mainBlockId %>); 
+    boardContainer.data("block_ids", [<%= @blockIds %>]); 
+    //var boardContext = {}; 
+    //boardContext['main_block_id'] = <%= @mainBlockId %>; 
+    //boardContext['main_entry_id'] = 0; 
+  }); 
+
+</script>
+
+
+<div id='<%= @board.id %>' class='board-container'>
+
+   <% @board.blocks.each do |block| %>
+       <%= block['blockHtml'].html_safe  %> 
+
+
+   <% end %>
+
+
+</div>

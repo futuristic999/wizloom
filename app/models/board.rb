@@ -1,3 +1,11 @@
 class Board < ActiveRecord::Base
-    has_and_belongs_to_many :blocks, :join_table => 'board_blocks'
+
+    has_many  :board_blocks,
+              :foreign_key => "board_id",
+              :class_name => "BoardBlock",
+              :order=>'display_order ASC'
+
+    has_many :blocks, 
+              :through => :board_blocks, 
+              :order=>'display_order ASC'
 end
