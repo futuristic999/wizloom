@@ -1,9 +1,43 @@
-// This is a manifest file that'll be compiled into including all the files listed below.
-// Add new JavaScript/Coffee code in separate files in this directory and they'll automatically
-// be included in the compiled file accessible from http://example.com/assets/application.js
-// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// the compiled file.
-//
-//= require jquery
-//= require jquery_ujs
-//= require_tree .
+   
+   
+    //show a template in the specified container
+    function getTemplate(templateId,container) {
+        console.log("In application.js getTemplate");
+        var url = "/templates/get/"+ templateId;
+        
+        $.ajax({
+            url : url,
+            type: "GET",
+            success: function(data) {
+                console.log("success in Ajax getTemplate"); 
+                console.log(data); 
+                var template_html = data['html'];
+                var oldTemplate = $(container).find('.template_container'); 
+                console.log('oldTemplate=' + oldTemplate);
+                oldTemplate.remove();    
+               
+                container.append(template_html); 
+            }
+
+        })
+    }
+   
+   /* 
+    
+    function saveEntry(data, callback) {
+  
+        console.log("In application.saveEntry(), data=" + data); 
+        var templateId = data['template_id']; 
+        var entryId = data['entry_id']; 
+        var url = data['url']; 
+
+        $.ajax({
+            url : url,
+            type : "POST", 
+            data : data, 
+            success: callback
+
+        });     
+
+    }
+    */

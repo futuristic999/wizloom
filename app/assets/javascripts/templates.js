@@ -455,7 +455,12 @@ $(document).ready(function() {
             input = "<input type='text' class='form_field t_association' />" +
                     "<span>Select a Type: </span><select class='entry_types'><option value='Select the Type'></select>"; 
             break;           
-      
+     
+       case 't_link': 
+            input =  "<div style='margin-bottom:2px'><span>Select a Template: </span><select class='template_select'><option value=''></select></div>"+ 
+                "<span>Select an Entry : <span><select class='entry_select'><option value='Select an Entry'></select>"; 
+            break;
+                 
        case 't_autolist_select': 
             input = "<select class='form_field t_autolist_select'>" + 
                       "<option value=''></option>" + 

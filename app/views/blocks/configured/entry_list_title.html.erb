@@ -1,12 +1,16 @@
-<div id='block-container-<%= @block.id %>' class='block-container'>
-  <div class='block-container-actions'>
-    <a href='' id='' class='add-list-item'>Add an Entry</a>
+
+<div id='block-container-<%= @block.id %>' class='block_container'>
+    <div class='block_title'><%= @block.template.name %>s</div>
+   <div class='list_actions'>
+     <a href='/templates/get/<%= context[:item_type_id] %>?view_type=list_title&list_id=<%= @block.template_id %>&entry_id=0' class='add_list_item'>Add to List
+         </a>
+   </div>
+
+  <div id='list_items_<%= @block.template_id %>'  class='list_items'>
+
+
+      <%= getListHtml(@entries, context).html_safe %>
   </div>
-  <div class='entries_container'>
-    <% @entries.each do |entry| %>
-        <div class='entry_container'>
-            <a href='/entries/get/<%= entry.id %>'><%= entry[:title] %></a>
-        </div>
-    <% end %>
-  </div>
+
+
 </div>

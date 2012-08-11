@@ -7,7 +7,7 @@
        </td>
        <td class='input_cell'>
           <div id='<%= field.id %>' class='field_input'>
-            <%= render :partial=>"fields/#{field[:fieldtype]}", :locals=>{:mode=>@mode, :field=>field, :fieldValues=>@fieldValues}  %>
+            <%= render :partial=>"fields/#{field[:fieldtype]}", :locals=>{:context=>{:mode=>@mode}, :field=>field, :fieldValues=>@fieldValues}  %>
           </div>
        </td>
     </tr>
@@ -22,5 +22,6 @@
 
 <div class='template_actions'>
 
-  <a href='<%= @saveUrl %>' class='<%= saveButtonClass %> save_button' id='<%= @saveUrl %>'>Save</a>
+  <a href='<%= @saveUrl %>' class='save_entry_button' data-template_id=<%= template.id %> data-entry_id=0 id='<%= @saveUrl %>'>Save</a>
 </div>
+

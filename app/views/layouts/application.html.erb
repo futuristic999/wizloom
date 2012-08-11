@@ -2,15 +2,15 @@
 <html>
 <head>
   <title>wzm</title>
-  <%= stylesheet_link_tag 'application' %>
-
+  <%= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css", :media=>'screen'  %>
+  <%= stylesheet_link_tag "application", :media=>'screen' %>
   <!--
   <%= stylesheet_link_tag 'bootstrap', :media => 'screen' %> 
   <%= stylesheet_link_tag 'main', :media => 'screen' %>
   <%= stylesheet_link_tag 'jquery_controls', :media => 'screen' %>
    -->
 
-  <!--  <%= javascript_include_tag "application" %> -->
+  <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" %>
   <%= javascript_include_tag "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js" %>
   <%= javascript_include_tag "jquery_ui_controls" %>
@@ -18,6 +18,8 @@
   <%= javascript_include_tag "entries" %>
   <%= javascript_include_tag "blocks" %>
   <%= javascript_include_tag "boards" %>
+  <%= javascript_include_tag "topics" %>
+
   <%= csrf_meta_tags %>
 </head>
 

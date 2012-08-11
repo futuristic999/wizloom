@@ -1,4 +1,4 @@
-
+<div id='template_container_<%= @template.id %>' class='template_container'>
 <table id='<%= @template.id %>' class='t_table'>
   <% @template.fields.each do |field| %>
     <% @context[:context] = 'field' %>
@@ -28,4 +28,6 @@
 
 <div class='template_actions'>
         <a href='/entries/save?<%= @context[:params_url] %>' id='save_entry_button_<%= @template.id %>_0' class='save_entry_button'>Save</a> 
+</div>
+
 </div>

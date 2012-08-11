@@ -1,8 +1,40 @@
+
+
+function saveEntry(templateContainer, template_id, callback) {
+    console.log("In entries.saveEntry"); 
+    var url = "/entries/save"; 
+
+    var data = processHtml(templateContainer); 
+    data['template_id'] = template_id;
+   
+     $.ajax({
+        url : url,
+        type : "POST", 
+        data : data, 
+        success: callback
+
+      });  
+
+}
+
+function addAssociation(entryId, assocEntryId, callback){
+    console.log("In addAssociation"); 
+    console.log("entryId=" + entryId + ", assocEntryId=" + assocEntryId); 
+
+    var url = "/entries/handle?action=associate&entry_id=" + entryId+"&assoc_entry_id="+assocEntryId); 
+    $.ajax({
+        
+
+    }); 
+
+
+}
+
+
 $(document).ready(function() {
     var primaryEntryId = 0; 
 
     console.log("In entries.js document ready()");
-
 
 
     $("#select_template option").click(function(){
@@ -13,9 +45,38 @@ $(document).ready(function() {
     }), 
 
 
+    /*
     $(".save_entry_button").live({
-    
-       click: function(event){
+       click : function(event) {
+          event.preventDefault(); 
+          var url = $(this).attr("href");
+          console.log("url="+url);
+                         
+          var id = $(this).attr("id");
+          var tokens = id.split("_");
+          var templateId = tokens[tokens.length-2];
+          var entryId = tokens[tokens.length-1];
+          console.log("entryId="+ entryId);
+          var entryContainer = $("#entry_container_" + entryId);
+          var templateContainer = entryContainer.children(".template_container");
+          console.log("entryContainer="+entryContainer.html());
+          var data = processHtml(templateContainer);
+          data['entry_id'] = entryId;
+          data['template_id'] = templateId;
+          data['url'] = url; 
+           
+          saveEntry(data, function(result) {
+            console.log("saveEntry callback function called!");
+            console.log("result=" + result); 
+            var entryHtml = result['entry_html']; 
+            var entryId = result['context']['entry_id']; 
+            console.log("entryId=" + entryId); 
+            window.location.replace("/entries/get/"+entryId);
+                 
+          });                                                                                                                        
+           
+       }, 
+       dblclick: function(event){
         event.preventDefault(); 
         console.log("save_entry_button clicked."); 
         var url = $(this).attr("href"); 
@@ -55,15 +116,15 @@ $(document).ready(function() {
                     console.log("Is list"); 
                     var templateId = context['template_id']; 
                     var templateContainer = $('#'+'template_container_'+templateId); 
-                    templateContainer.remove(); 
+                    //templateContainer.remove(); 
                      
                     var listId = context['list_id']; 
-                    var listContainerId = "t_list_items_" + listId;
+                    var listContainerId = "list_items_" + listId;
                     console.log("listContainerId="+listContainerId);
                     var listContainer = $('#'+listContainerId); 
                     console.log("listContainer=" + listContainer);
-                    $('#'+listContainerId).append(data['entry_html']);
-                    //$("#dialog").dialog("close"); 
+                    $('#'+listContainerId).prepend(data['entry_html']);
+                    $("#entry_container_0").dialog("close"); 
                 }
                 else {
                     console.log("In else"); 
@@ -76,7 +137,6 @@ $(document).ready(function() {
                     templateContainer.attr("id", "template_container_"+ data["context"]["template_id"]); 
 
                     entryContainer.append(templateContainer);
-                    console.log("entryContainer.html=" + entryContainer.html()); 
 
                     var curEntryContainer = $("#editor_wrapper").children(".entry_container"); 
                     console.log("curEntryContainer="+ curEntryContainer);     
@@ -95,6 +155,8 @@ $(document).ready(function() {
        }
         
     }), 
+    */
+
 
     $(".delete_entry").click(function(){
         console.log("delete_entry clicked"); 
@@ -135,10 +197,11 @@ $(document).ready(function() {
              if (curEntryContainer != null) {
                 curEntryContainer.remove(); 
              }
-             var entryContainer = $("<div></div>").attr("class", "entry_container new_entry"); 
+             var entryContainer = $("<div></div>").attr("class", "entry_container new_entry");  
              entryContainer.attr("id", "entry_container_0"); 
              
-             var editorWrapper = $("<div></div>").html(templateHtml); 
+             var editorWrapper = $("<div></div>").html(templateHtml);
+             console.log("editorWrapper="+ editorWrapper);  
              editorWrapper.attr("class", "template_container");
              editorWrapper.attr("id", "template_container_"+data['context']['template_id']); 
              
@@ -154,6 +217,24 @@ $(document).ready(function() {
     }
    }),
 
+
+   $(".delete_list_item").live({
+     click: function(event) {
+        event.preventDefault(); 
+        console.log("delete_list_item clicked."); 
+        var url = $(this).attr("href"); 
+        console.log("url="+url); 
+        $.ajax({
+            url: url,
+            dataType: "script",
+            type: "GET",
+            success: function(data){
+                console.log("Ajax success for " + url); 
+            }
+        }); 
+     }
+   }),
+
    $(".save_list_item").click(function(event){
       console.log("save_list_item clicked."); 
       event.preventDefault(); 
@@ -166,23 +247,35 @@ $(document).ready(function() {
 }); 
 
 
-
+function deleteListItem(listItemId) {
+    console.log("In deleteListItem, listItemId=" + listItemId); 
+    var listItem = $("#list_item_" + listItemId); 
+    listItem.remove(); 
+}
 
 
 function showTemplate(templateId, parentContainer){
-
+        console.log("In showTemplate"); 
         $.ajax({
            // url: "/templates/get/"+templateId,
             url: "/entries/new?template_id="+templateId+"&create=true&title='New Entry for Template "+templateId+"'",
             type: "GET", 
             success: function(data) {
+                console.log("Ajax success in showTemplate"); 
+                console.log(data); 
                 var context = data['context']; 
                 var entryId = context['entry_id']; 
+                console.log("entryId=" + entryId); 
                 var entryHtml = data['entry_html'];
-                
-                var entryContainer = $("<div></div>").addClass("entry_container"); 
+
+                var entryContainer = parentContainer.find(".entry_container"); 
+                if(entryContainer.length > 0) {
+                    entryContainer.remove(); 
+                }
+                entryContainer = $("<div></div>").addClass("entry_container"); 
                 entryContainer.attr("id", "entry_container_" + entryId); 
-                
+         
+                   
                 var templateContainer = $("<div></div>").addClass("template_container").html(entryHtml);  
                 templateContainer.attr("id", "template_container_" + context["template_id"]); 
 
@@ -190,7 +283,7 @@ function showTemplate(templateId, parentContainer){
                 //var templateContainerDiv = $("<div></div>").addClass("template_container"); 
                 //templateContainerDiv.attr("id", "template_container_"+templateId).html(templateHtml);   
                 //parentContainer.children().replaceWith(templateContainerDiv); 
-                
+                console.log("parentContainer=" + parentContainer.html());  
                 parentContainer.append(entryContainer); 
                 parentContainer.css("display", "block"); 
                  
@@ -223,7 +316,7 @@ function processHtml(templateContainerDiv) {
     console.log('fieldValueId='+fieldValueId);
 
     var fieldValue = $(formField).val(); 
-    console.log('fieldValue='+fieldValue); 
+    console.log('--fieldValue='+fieldValue); 
     
     var fieldInput = $(formField).parents(".field_input"); 
     console.log("fieldInput = "+ fieldInput); 
@@ -232,9 +325,12 @@ function processHtml(templateContainerDiv) {
     
     var mdKey; 
     var mdValue;
+    var isMetadataField = false;
 
-    if (fieldId.indexOf("_") != -1) {
-      var tokens = fieldId.split("_"); 
+    if (fieldValueId.indexOf("_") != -1) {
+      console.log("IisMetadataField is true!"); 
+      isMetadataField = true;
+      var tokens = fieldValueId.split("_"); 
       fieldId = tokens[0]; 
       mdKey = tokens[1];    
     }
@@ -248,8 +344,11 @@ function processHtml(templateContainerDiv) {
     }
 
         //fields[fieldId]['metadata'][mdKey] = fieldValue;
-    fields[fieldId]['value'] = fieldValue;
-    fields[fieldId]['fieldvalue_id'] = fieldValueId;
+    if (isMetadataField == false) {
+        fields[fieldId]['value'] = fieldValue;
+        console.log( "fields[fieldId]['value'] = " + fieldValue);
+        fields[fieldId]['fieldvalue_id'] = fieldValueId;
+    }
    
      
   }
@@ -267,86 +366,4 @@ function addListEntry(listId, entryHtml) {
     
 }
 
-    
-function processHtmlOld(){
-    var data = {}; 
-    var fields = {}; 
 
-    var cachedDiv = $("<table></table>").addClass("t_table"); 
-
-    var editorDiv = $("#editor_wrapper"); 
-
-    var templateContainerDiv = editorDiv.children('.template_container'); 
-    console.log("templateContainerDiv= "+templateContainerDiv); 
-
-    var templateId = templateContainerDiv.attr("id"); 
-    console.log("templateId="+templateId); 
-
-    //var row = $(".t_table tr:first-child"); 
-    var tTable = templateContainerDiv.find(".t_table"); 
-    console.log("tTable="+tTable.html()); 
-
-    var row = tTable.find("tr:first"); 
-    //var row = $(".t_table").find("tr:first"); 
-    console.log('row='+row.html());  
-
-    while (row.hasClass("t_field_row")){
-       
-       var cachedRow = row.clone(); 
-
-       var label = row.find(".t_label").html(); 
-       console.log("label="+label); 
-
-
-       if (row.find('.t_list_items').size() > 0) {
-           console.log("found t_list_item"); 
-           var listItemsDiv = cachedRow.find('.t_list_items'); 
-           var listItem = listItemsDiv.find('.t_list_item:first'); 
-         
-           var listFieldValues = [];  
-           while(listItem.hasClass('t_list_item')) { 
-             console.log("listItem="+$(listItem).html());    
-             
-             var itemFieldInput = listItem.find(".form_field"); 
-             var itemFieldValue = itemFieldInput.attr('value');  
-             console.log('itemFieldValue='+itemFieldValue);
-             var itemFieldClass = itemFieldInput.attr('class'); 
-             console.log('itemFieldClass='+itemFieldClass); 
-
-             itemFieldInput.replaceWith($("<div class='" + itemFieldClass + "'>" + itemFieldValue + "</div>"));   
-             console.log("cachedRow="+cachedRow.html()); 
-             
-             listFieldValues.push(itemFieldValue); 
-
-             listItem = listItem.next();       
-           }
-
-           fields[label] = listFieldValues;
-       } else {
-            var fieldValue = row.find(".form_field").attr("value"); 
-            console.log("fieldValue="+fieldValue);
-   
-       
-            var fieldInput = cachedRow.find(".field_input");
-            var fieldId = fieldInput.attr("id"); 
-            var fieldClass = fieldInput.attr('class'); 
-            cachedRow.find(".field_input").replaceWith("<div class='"+fieldClass + "'>"+fieldValue + "</div>");
-            //fields[label] = fieldValue; 
-            fields[fieldId] = fieldValue;
-        }
-        
-       cachedDiv.append(cachedRow); 
-
-
-       row = row.next(); 
-    }
-    var html = "<table class='t_table'>" + cachedDiv.html() + "</table>"; 
-    //console.log("html="+html); 
-
-    data['html'] = html;
-    //data['html'] = "<table class='t_table'>" + tTable.html() + "</table>"; 
-    data['fields'] = fields; 
-    data['template_id'] = templateId; 
-
-    return data; 
-}

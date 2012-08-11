@@ -8,4 +8,6 @@ class Board < ActiveRecord::Base
     has_many :blocks, 
               :through => :board_blocks, 
               :order=>'display_order ASC'
+    belongs_to :topic, 
+               :class_name => "Topic"
 end

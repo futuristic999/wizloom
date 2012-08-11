@@ -2,7 +2,9 @@ class ApplicationController < ActionController::Base
 
     helper :all
     helper_method :getListHtml
-
+    helper_method :getEntryHtml
+    helper_method :getBlockHtml
+    helper_method :getFeedsHtml
 
     def saveEntry(params)
         puts "ApplicationController.saveEntry called. params=#{params}"
@@ -99,6 +101,7 @@ class ApplicationController < ActionController::Base
     end
 
     def getEntryTitle(template, fields, fieldValues)
+        puts "in getEntryTitle, fieldValues=#{fieldValues}"
         title = "[#{template.name}]"
         titleValue = ""
 
@@ -110,6 +113,12 @@ class ApplicationController < ActionController::Base
                 break
             end
         end
+
+        if titleValue == ""
+            firstFieldId = fieldValues.keys[0]
+            titleValue = fieldValues[firstFieldId]['value']
+        end 
+
         title = "#{title} #{titleValue}"
         return title
 
@@ -141,14 +150,17 @@ class ApplicationController < ActionController::Base
     end
     
     def getEntryHtml(params)
+        puts "In getEntryHtml(), params=#{params}"
         if params.has_key?(:entry) 
             @entry = params[:entry]    
-            @fieldValues = params[:field_values]
+            #@fieldValues = params[:field_values]
         else    
             entryId = params[:entry_id] 
             @entry = Entry.find(entryId)
-            @fieldValues = @entry.fieldValues.includes(:field, :field_metadata)
+            #@fieldValues = @entry.fieldValues.includes(:field, :field_metadata)
         end
+
+        @fieldValues = @entry.fieldValues.includes(:field, :field_metadata)
 
         viewType = params['view_type']
         mode = params[:mode]
@@ -176,6 +188,7 @@ class ApplicationController < ActionController::Base
                
 
         if @entry.entry_type == 'templated'
+            puts "entry_type is templated"
             @context = params
             @fields = @entry.template.fields
             @template = @entry.template            
@@ -197,10 +210,12 @@ class ApplicationController < ActionController::Base
                 template = "/entries/table_format.html.erb"
             end
             puts "template is #{template}" 
-            
+            puts "fieldValues=#{@fieldValues}"
+             
             @fieldValues.each do |fieldValue| 
-                puts "*** fieldValue.id=#{fieldValue.id}, fieldId=#{fieldValue.field.id}"
-                if fieldValue.field[:fieldtype] == 't_association_list'
+                puts "fieldValue=#{fieldValue}"
+                #puts "*** fieldValue.id=#{fieldValue.id}, fieldId=#{fieldValue.field.id}"
+                if fieldValue.field != nil && fieldValue.field[:fieldtype] == 't_association_list'
                   puts "fieldValue.field[:fieldtype] is _t_association_list"
                   associatedTemplateId = fieldValue.field.list_descriptor[:item_type_id]
                   associatedEntries = getAssociatedEntries(@entry.id, associatedTemplateId)
@@ -210,8 +225,6 @@ class ApplicationController < ActionController::Base
                   listContext = Hash.new
                   listContext[:mode] = 'display'
                   @context[fieldKey.to_sym][:associated_entries] = associatedEntries
-                  #entriesHtml = getListHtml(associatedEntries)
-                  #fieldValue[:html] = getListHtml(associatedEntries)
                 end
             end
             
@@ -223,7 +236,7 @@ class ApplicationController < ActionController::Base
                       )
 
         end
-
+        puts "entryHtml=#{entryHtml}" 
         return entryHtml
     end
 
@@ -232,9 +245,16 @@ class ApplicationController < ActionController::Base
     def getListHtml(entries, context)
         puts "--------------------in getListHtml() --------------------"
         html = ""
+        #entries_short = Array.new
+        #entries_short[0] = entries[1]
+
         entries.each do |entry| 
-            params = {:entry_id=>entry.id, :view_type=>"list_full", :mode=>"display"}
-            html = html + getEntryHtml(params)
+            context[:entry_id] = entry.id
+            context[:mode] = 'display'
+            entryHtml = getEntryHtml(context)
+            if entryHtml != nil 
+                html = html + entryHtml
+            end
         end
         puts "---------------------end of getListHtml() ---------------"
         puts "html=#{html}" 
@@ -242,9 +262,10 @@ class ApplicationController < ActionController::Base
     end
 
     def getListEntries(params)
-        if params['item_class'] == 'entry'
-            templateId = params['item_type_id']
-            entries = Entry.where(:template_id=>templateId)
+        entries = Array.new
+        if params[:item_class] == 'entry'
+            templateId = params[:item_type_id]
+            entries = Entry.where(:template_id=>templateId).order("created_at DESC")
         end
         return entries
 
@@ -276,7 +297,42 @@ class ApplicationController < ActionController::Base
 
 
 
+  def getBlockHtml(params)
+    puts "In getBlockHtml, params=#{params}"
+    if params.has_key?(:block) 
+        @block = params[:block]
+    else 
+        @block = Block.find(params[:block_id])
+    end
 
+    puts "view_type = #{@block[:view_type]}" 
+
+    #if @block[:view_type] =='list_full' || @block[:view_type] =='list_title'
+        params = {:item_class=>'entry', :item_type_id=>@block[:template_id]}
+        context = params
+        context[:view_type] = @block[:view_type]
+
+        @entries = getListEntries(params)
+        puts "template_id=#{@block[:template_id]}, entries are : #{@entries}" 
+        
+        templateFile = "#{@block[:entry_type]}_#{@block[:view_type]}.html.erb"
+
+        blockHtml = render_to_string(:template=>"/blocks/configured/#{templateFile}",
+                        :layout =>false,
+                        :locals => {:context => context})
+    #end
+
+    return blockHtml
+    
+  end
+
+
+  def getFeedsHtml(topics) 
+    puts "getFeedHtml(), topics=#{topics}" 
+    return "<P>Feeds here..."
+  end
+
+=begin
 
   def getBlockHtml(blockId, params)
       @block = Block.find(blockId)
@@ -307,7 +363,7 @@ class ApplicationController < ActionController::Base
       return blockHtml
 
   end
-
+=end
   def getBlockEntries(block, params)
     entries = Array.new
     if params.has_key?(:main_entry_id) == false
@@ -328,6 +384,8 @@ class ApplicationController < ActionController::Base
     return entries
 
   end
+
+
 
 end
 

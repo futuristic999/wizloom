@@ -6,6 +6,15 @@ class EntriesController < ApplicationController
   end
 
 
+  #Displays the entry create page
+  def create
+    templateId = params[:template_id]
+    @template = Template.find(templateId)
+    render :template => "/entries/create.html.erb"
+    
+  end
+
+
   # Save an entry
   # Only handles the Ajax call right now
   def save
@@ -85,7 +94,9 @@ class EntriesController < ApplicationController
     end
         
   end
- 
+
+
+  #Support Ajax calls only 
   def get
     puts "In entries#get, params=#{params}"
     context = params
@@ -100,6 +111,22 @@ class EntriesController < ApplicationController
         render :template => "/entries/get.html.erb"
 
     end
+
+  end
+
+  def show
+    puts "In entries#show, params=#{params}" 
+    entryId = params[:id] 
+    puts "entryId=#{entryId}"
+
+    context = params
+    context[:entry_id] = params[:id]
+    context[:mode] = 'display'
+    context[:view_type] = 'table'
+    
+    @entry = Entry.find(entryId)
+    @entryHtml = getEntryHtml(context)
+    render :template => "/entries/show.html.erb"
 
   end
 
@@ -136,7 +163,8 @@ class EntriesController < ApplicationController
     status = Entry.delete(entryId)
     if request.xhr?
         puts "It's Ajax delete."
-        render :json => {:status => 'OK', :entry_id => entryId }
+        #render :json => {:status => 'OK', :entry_id => entryId }
+        render :partial => "/shared/delete_list_item", :locals=>{:entry_id=>entryId}
     end
   end
 
@@ -144,7 +172,9 @@ class EntriesController < ApplicationController
 
   end
 
-  def show
+
+  def getRelatedEntries(entryId)
+
   end
 
 end

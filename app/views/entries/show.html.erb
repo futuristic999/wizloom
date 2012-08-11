@@ -1,7 +1,74 @@
-<div id=<%= @entry.id %> class='entry_container'>
-    <div class='entry_title'> <%= @entry.title %> </div>
+<!-- Full display of an entry -->
 
-    <div class='entry_body'>
-        <%= @entry.body.html_safe  %>
+
+<div id='entry_container_<%= @entry.id %>' class='entry_container'>
+    <div class='entry_title'> 
+        <%= @entry.title %> 
+    </div>
+
+    <div class='editor_container'>
+        <%= @entryHtml.html_safe  %>
+
+        <div class='entry_controls'>
+            <a href='/entries/edit/<%= @entry.id %>' class='edit_entry' data-entry_id=<%= @entry.id %>>Edit</a>
+        </div>
+
     </div>
 </div>
+
+<div id='associations_container_<%= @entry.id %>' class='associations_container'>
+    <div class='association_controls'>
+        <div>
+            <a href='' class='add_association control_button' data-entry_id=<%= @entry.id %>>Add related entry</a>
+        </div>
+
+        <div class="ui-widget">
+            <input type='text' id='association_search_box' class='search_box'/>
+        </div>
+            
+    </div>
+
+    <div class='associated_entries'>
+        <% @entry.associated_entries.each do |entry| %>
+            <div class='entry_tag_container'>
+                           <%= render :partial=>"entries/entry_summary",
+                                           :locals=>{:entry=>entry}
+                           %>
+            </div>
+        <% end %>
+    </div>
+</div>
+
+
+<script type='text/javascript'>
+  $(function(){
+      console.log("In /entries/show.html.erb"); 
+
+      var defaultTags = [
+        "Recents",
+        "All"
+      ];   
+
+      var addAssociationCallback = function(entryId, assocEntryId){
+
+      }; 
+
+      $("#association_search_box").autocomplete({
+        source : "/search"
+    
+      }); 
+
+      $( "#association_search_box" ).bind( "autocompleteselect", function(event, ui) {
+        console.log("Clicked item " + ui.item.value);
+        var assocEntryId = ui.item.value;
+        var entryId = $("#association_search_box" ).attr("data-entry_id"); 
+        addAssociation(entryId, assocEntryId); 
+        }); 
+
+     $('.add_association').click(function(evt){
+        evt.preventDefault(); 
+        console.log(".add_association clicked."); 
+
+     }); 
+  }); 
+</script>

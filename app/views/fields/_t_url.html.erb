@@ -1,16 +1,16 @@
         
-        <% if mode=='display' %>
+    <% if context[:mode] == 'display' %>
            <a href='<%= fieldValue[:value] %>' id=''><%= fieldValue[:value] %></a>
         <% else %>
            <input id=<%= field.id %> class='form_field t_url' type='text'></input>
-        <% end %>
+    <% end %>
 
     <div class='field_metadata' style='display:none'>
     <div class='md_label'>
         Name
     </div>
     <div class='md_input'>
-        <% if mode=='display' %>
+        <% if context[:mode] == 'display' %>
            <%= fieldValue.metadata[:name] %>
         <% else %>
             <input id=<%= field.id %>_name class='form_field' type='text'></input>
@@ -22,7 +22,7 @@
     </div>
    
     <div class='md_input'>
-        <% if mode=='display' %>
+        <% if context[:mode]=='display' %>
             <% fieldValue.metadata[:description] %>
         <% else %>
             <input id=<%= field.id %>_description class='form_field' type='text'></input>

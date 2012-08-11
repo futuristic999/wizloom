@@ -1,17 +1,23 @@
+<p>/entries/table_format.html.erb
+
 <table id='<%= @template.id %>' class='t_table'>
+  
   <% @entry.fieldValues.each do |fieldValue| %>
+    <% if fieldValue.field != nil %>
     <tr id='<%= fieldValue.field.id %>' class='t_field_row'>
        <td class='label_cell'>
           <%= fieldValue.field.label %>
        </td>
        <td class='input_cell'>
+          <% if fieldValue.field != nil %>
           <div id='<%= fieldValue.field.id %>' class='field_input'>
             <%= render :partial=>"fields/#{fieldValue.field[:fieldtype]}", 
                 :locals=>{:field=>fieldValue.field, :fieldValue=>fieldValue, :context=>@context}  %>
           </div>
+          <% end %>
        </td>
     </tr>
-  
+  <% end %>
 
 
   <% end %>
@@ -20,7 +26,5 @@
 
 </table>
 
-<div class='template_actions'>
-        <a href='/entries/save?view_type=table&template_id=<%= @template.id  %>&entry_id=<%= @context[:entry_id] %>' id='save_entry_button_<%= @context[:template_id] %>_<%= @context[:entry_id] %>' class='save_entry_button'>Save</a>
-</div>
 
+    

@@ -1,3 +1,7 @@
+.entry_container {
+    margin-bottom: 10px;
+}
+
 .save_entry_button {
     border: 1px solid lightgrey;
     border-radius: 3px 3px 3px 3px;
@@ -17,4 +21,17 @@
     border-bottom: 1px solid lightgrey;
     margin-bottom: 5px;
 }
-
+.list_entry_container:hover {
+    background-color: lightgray;
+}
+.list_actions{
+    margin-bottom: 10px;
+    font-size: 10px;
+    font-weight: normal;
+}
+.list_item_actions{
+    font-size: 9px;
+    font-weight: normal,
+    margin-bottom: 5px;
+    color: lightgray;
+}

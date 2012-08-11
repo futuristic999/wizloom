@@ -1,11 +1,9 @@
 
 <div id='block_container_<%= @block.id %>' class='block_container'>
-  
-  <div class='block_actions'>
-    <a id='<%= @block.view_type %> <%= @block.id %>_<%= @block.template.id %>_<%= @block.associated_entry_id %>' 
-        class='new_list_entry' href='#'>Add a New Entry+</a>
-  </div>
-  
+
+  <div class='block_title'>
+    <%= @block.template.name %>s
+  </div>  
   <div id='editor_wrapper'>
       <div class='template_container'></div>
   </div>
@@ -15,14 +13,17 @@
     <div id=<%= @block.id %> class='save_entry_to_list_button save_button'>Save</div>
   </div>
 
-  <div class='entries_container'>
-    <% @entries.each do |entry| %>
-        <div id='<%= entry.id %>' class='entry_container'>
-            <%= entry[:body].html_safe %>
-        </div>
-    <% end %>
+
+ <div class='list_actions'>
+  <a href='/templates/get/<%= context[:item_type_id] %>?view_type=list_full&list_id=<%= @block.template_id %>&entry_id=0' class='add_list_item'>Add to List
+    </a>
   </div>
 
+
+ <div id='list_items_<%= @block.template_id %>'  class='list_items'>
+
+    <%= getListHtml(@entries, context).html_safe %>
+  </div>
 
 
 </div>

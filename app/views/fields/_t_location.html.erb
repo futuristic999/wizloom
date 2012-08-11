@@ -1,5 +1,5 @@
   <div class='composite_field'>
-        <% if mode=='display' %>
+        <% if context[:mode] =='display' %>
            <%= fieldValue.metadata[:location] %>
         <% else %>
            <input id=<%= field.id %>_location class='form_field' type='text'></input>

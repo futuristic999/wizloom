@@ -1,26 +1,29 @@
+
 <div id='list_item_<%= @entry.id %>' class='list_item'>
+   <div class='list_item_actions'>
+           <a href='/entries/delete/<%= @entry.id %>' class='delete_list_item list_edit_button'>X</a>
+   </div>
+
+
     <div id='list_entry_container_<%= @entry.id %>' class='list_entry_container'>
 
-<table id='<%= @template.id %>' class='t_table'>
-  <% @entry.fieldValues.each do |fieldValue| %>
-    <tr id='<%= fieldValue.field.id %>' class='t_field_row'>
-       <td class='label_cell'>
-          <%= fieldValue.field.label %>
-       </td>
-       <td class='input_cell'>
-          <div id='<%= fieldValue.field.id %>' class='field_input'>
-            <%= render :partial=>"fields/#{fieldValue.field[:fieldtype]}", 
-                :locals=>{:mode=>'display', :field=>fieldValue.field, :fieldValue=>fieldValue, :context=>@context}  %>
-          </div>
-       </td>
-    </tr>
+        <table id='<%= @template.id %>' class='t_table'>
+          <% @entry.fieldValues.each do |fieldValue| %>
+            <tr id='<%= fieldValue.field.id %>' class='t_field_row'>
+                <td class='label_cell'>
+                    <%= fieldValue.field.label %>
+                </td>
+                <td class='input_cell'>
+                    <div id='<%= fieldValue.field.id %>' class='field_input'>
+                        <%= render :partial=>"fields/#{fieldValue.field[:fieldtype]}", 
+                        :locals=>{:mode=>'display', :field=>fieldValue.field, :fieldValue=>fieldValue, :context=>@context}  %>
+                    </div>
+                </td>
+            </tr>
   
 
 
-  <% end %>
-
-
-
-</table>
-</div>
+         <% end %>
+        </table>
+    </div>
 </div>

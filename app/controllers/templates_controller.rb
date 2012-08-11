@@ -6,6 +6,9 @@ class TemplatesController < ApplicationController
 
   #GET /templates/
   def index
+
+     @templates = Template.all()
+
      render :template => 'templates/index.html.erb'  
   end
 

@@ -11,6 +11,19 @@ h1 {
   background: whiteSmoke; 
 
 }
+.ui-state-active .ui-state-default .ui-widget-content .ui-state-active {
+    border: 1px solid lightgray;
+    background-color: transparent;
+}
+.ui-widget-header {
+    background: transparent;
+}
+.ui-widget-content {
+    background: transparent;
+}
+.ui-state-default{
+    font-weight: normal;
+}
 div#header {
    height:40px;
    position:relative;
@@ -63,6 +76,13 @@ ul {
     border-bottom: 1px solid lightgrey;
 
 }
+
+.control_button .select_button {
+    color: lightgray;
+    font-size: 120px;
+}
+
+
 .save_button {
     border: 1px solid lightgrey; 
     border-radius: 3px 3px 3px 3px;
@@ -101,6 +121,16 @@ ul {
 
 
 }
+
+.add_list_item{
+    border: 1px solid lightgray;
+    border-radius: 2px 2px 2px 2px;
+    background-color: whiteSmoke;
+    text-align: center;
+    padding: 3px 7px;
+    margin-bottom: 10px;
+    
+}
 .ui-draggable {
   border: 2px solid lightgray;
   cursor: move;
@@ -114,4 +144,18 @@ ul {
 
 .form_row {
   margin-bottom: 10px;
+}
+.prompt_text{
+  color: lightgray;
+}
+
+.title {
+    min-height: 30px;
+}
+.title_input {
+    min-height: 15px;
+    width: 90%;
+}
+.search_box{
+    width: 90%;
 }

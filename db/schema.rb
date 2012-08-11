@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120413230214) do
+ActiveRecord::Schema.define(:version => 20120720164052) do
 
   create_table "blocks", :force => true do |t|
     t.string   "entry_type"
@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(:version => 20120413230214) do
     t.string   "display"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "config"
+    t.integer  "topic_id"
   end
 
   create_table "comments", :force => true do |t|
@@ -61,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20120413230214) do
     t.datetime "updated_at"
     t.string   "entry_type"
     t.string   "descriptor"
+    t.string   "topic_ids"
   end
 
   add_index "entries", ["fieldvalues_id"], :name => "index_entries_on_fieldvalues_id"
@@ -72,6 +75,14 @@ ActiveRecord::Schema.define(:version => 20120413230214) do
     t.integer "list_id"
     t.string  "association_type"
     t.integer "display_order"
+  end
+
+  create_table "feeds", :force => true do |t|
+    t.integer  "topic_id"
+    t.string   "activity_type"
+    t.string   "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "field_metadata", :force => true do |t|
@@ -157,6 +168,30 @@ ActiveRecord::Schema.define(:version => 20120413230214) do
     t.datetime "updated_at"
     t.text     "stub"
     t.text     "cached_html"
+  end
+
+  create_table "topic_associations", :force => true do |t|
+    t.integer  "topic_id"
+    t.integer  "associated_topic_id"
+    t.string   "association_type"
+    t.string   "config"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "topic_entries", :force => true do |t|
+    t.integer "topic_id"
+    t.integer "entry_id"
+    t.integer "display_order"
+  end
+
+  create_table "topics", :force => true do |t|
+    t.string   "name"
+    t.string   "config"
+    t.integer  "template_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "template_ids"
   end
 
   create_table "urls", :force => true do |t|

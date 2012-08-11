@@ -20,6 +20,14 @@
   padding: 5px;
 }
 
+.editor_container {
+    width: 100%; 
+    padding: 10px 10px;
+    border: 1px solid lightgray;
+    border-radius: 5px 5px 5px 5px;
+    min-width: 600px;
+}
+
 .form_label_td {
   text-align: right;
 }

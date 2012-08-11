@@ -1,10 +1,21 @@
 Wizloom::Application.routes.draw do
 
+  match "topics"            => "topics#index"
+  match "topics/show/:id"   => "topics#show"
+
+  match "search"            => "search#index"
+
+  match "blog"              => "blogs#index"
+
+  match "boards"            => "boards#index"
   match "boards/new"        => "boards#new"
   match "boards/get/:id"    => "boards#get"
   match "boards/create"     => "boards#create"
   match "boards/list"       => "boards#list"
   match "boards/delete/:id" => "boards#delete"
+  match "boards/journal"    => "boards#journal"
+  match "boards/tabbed"     => "boards#tabbed" 
+  match "boards/default"   => "boards#default"
 
   match "lists/newItem/:id" => "lists#newItem"
   match "lists/saveItem/:id" => "lists#saveItem"
@@ -19,10 +30,13 @@ Wizloom::Application.routes.draw do
 
   match "entries"           => "entries#index"
   match "entries/new"       => "entries#new"
+  match "entries/create"    => "entries#create"
   match "entries/save"      => "entries#save"
   match "entries/get/:id"   => "entries#get"
   match "entries/list"      => "entries#list"
   match "entries/delete/:id"    => "entries#delete"
+  match "entries/:id"       => "entries#show"
+
 
   match  "templates.json/get/:id" => "templates#get"
   match  "templates/get/:id"    => "templates#get"
