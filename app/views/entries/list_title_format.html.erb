@@ -1,0 +1,14 @@
+
+<div id='list_item_<%= @entry.id %>' class='list_item'>
+    <div class='list_item_actions'>
+        <a href='/entries/delete/<%= @entry.id %>' class='delete_list_item list_edit_button'>X</a>
+
+    </div>
+    
+    <div id='list_entry_container_<%= @entry.id %>' class='list_entry_container'>
+        <div class='list_title'>
+            <a href='/entries/get/<%= @entry.id %>'><%= @entry.title %></a>
+        </div>
+    
+    </div>
+</div>

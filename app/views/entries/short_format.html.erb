@@ -1,0 +1,29 @@
+<p style='font-size:10px; color: lightgray'>/entries/short_format.html.erb
+
+<table id='<%= @template.id %>' class='t_table'>
+  
+  <% @entry.fieldValues.each do |fieldValue| %>
+    <% if fieldValue.field != nil && fieldValue.field[:fieldtype] != 't_association_list' %>
+    <tr id='<%= fieldValue.field.id %>' class='t_field_row'>
+       <td class='label_cell'>
+          <%= fieldValue.field.label %>
+       </td>
+       <td class='input_cell'>
+          <div id='<%= fieldValue.field.id %>' class='field_input'>
+
+            <%= render :partial=>"fields/#{fieldValue.field[:fieldtype]}", 
+                :locals=>{:field=>fieldValue.field, :fieldValue=>fieldValue, :context=>@context}  %>
+          </div>
+       </td>
+    </tr>
+  <% end %>
+
+
+  <% end %>
+
+
+
+</table>
+
+
+    

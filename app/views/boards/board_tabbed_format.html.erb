@@ -1,0 +1,31 @@
+<script>
+    $(function() {
+        console.log("Creating tabs"); 
+        $("#tabs_<%= @board.id %>").tabs(); 
+    }); 
+
+</script>
+
+<div id='<%= @board.id %>' class='board-container'>
+
+
+<div id='tabs_<%= @board.id %>'>
+   <ul>
+   <% index = 1 %>
+   <% @board.blocks.each do |block| %>
+       <li><a href='#tabs_<%= @board.id %>_<%= block.id %>'><%= block.name %></a></li>
+        <% index = index + 1 %>
+
+   <% end %>
+   </ul>
+
+
+   <% @board.blocks.each do |block| %>
+    <div id='tabs_<%= @board.id %>_<%= block.id %>'>
+        <%= block['blockHtml'].html_safe %>
+
+   </div>
+   <% end %>
+</div>
+
+</div>

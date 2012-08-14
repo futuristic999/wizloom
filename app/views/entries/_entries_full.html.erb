@@ -1,0 +1,25 @@
+<!-- Partial to display entries 
+     Each entry is displayed in full
+-->
+
+<style>
+  .entry {
+    margin-bottom: 18px;
+    border: 1px solid lightgray;
+    padding: 5px;
+    border-radius: 3px 3px 3px 3px; 
+  }
+</style>
+
+
+  <p> entries_full.html.erb
+   
+    <% entries.each do |entry| %>
+       <div class='entry'> 
+        <div class='entry_title'><%= entry[:title] %> </div>
+        <% html= getEntryHtml({:entry_id=>entry.id, :mode=>'display', :view_type => 'short'}) %>
+        <% if html != nil %>
+           <%= html.html_safe %>
+        <% end %>
+        </div>
+    <% end %>

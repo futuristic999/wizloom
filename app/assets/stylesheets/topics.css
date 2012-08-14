@@ -1,0 +1,28 @@
+    .topics_header {
+        border-bottom: 1px solid lightgray;
+        margin-bottom: 10px;
+        padding-bottom: 20px;
+    }
+    .topic_name {
+        border: 1px solid lightgray; 
+        -moz-border-radius: 5px 5x 5px 5px;
+        border-radius: 5px 5px 5px 5px;
+        padding: 5px 3px;
+        float: left;
+        margin-right: 10px;
+        margin-bottom: 20px;
+    }
+    .topic_name:hover {
+        background-color: lightgray; 
+    }
+
+    .editor_container {
+        width: 100%;
+        padding: 10px 10px;
+        border: 1px solid lightgray;
+        border-radius: 5px 5px 5px 5px;  
+
+        min-width: 600px;
+    }
+
+

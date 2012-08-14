@@ -1,0 +1,6 @@
+<% if context[:mode] == 'display' %>
+  <input id='<%= fieldValue[:id] %>' type='checkbox'> <%= fieldValue[:value] %>
+<% else %>
+  <input id='0' class='form_field t_checkbox' type='checkbox'></input>
+
+<% end %>

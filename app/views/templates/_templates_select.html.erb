@@ -1,0 +1,14 @@
+<!-- Partial to display a <select> the list of templates, and show the selected
+     template in editor_wrapper
+-->
+
+    <select id='<%= divId %>' class='templates_select'>
+        <option value='Select a Template'>Select a Template</option>
+        <% templates.each do |template_id, name| %>
+            <option value='<%= template_id %>'><%= name %></option>
+        <% end %>
+    </select>
+
+
+
+

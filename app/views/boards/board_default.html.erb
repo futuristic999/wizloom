@@ -1,0 +1,30 @@
+<p>board_default.html.erb
+
+<script>
+    $(function() {
+        console.log("Creating tabs"); 
+        $("#tabs_<%= @board.id %>").tabs(); 
+    }); 
+
+</script>
+
+<div id='<%= @board.id %>' class='board-container'>
+
+<div id='tabs_<%= @board.id %>'>
+   <ul>
+   <% @config[:tabs].each do |tabName, tabConfig| %>
+       <li><a href='#tab_<%= tabName %>'><%= tabName %></a></li>
+
+   <% end %>
+   </ul>
+
+
+   <% @config[:tabs].each do |tabName, blockConfig| %>
+    <div id='tab_<%= tabName %>'>
+        <%= getBlockHtml({:block=>blockConfig, :view_type=>blockConfig[:view_type]}).html_safe %>
+
+   </div>
+   <% end %>
+</div>
+
+</div>

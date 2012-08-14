@@ -1,0 +1,5 @@
+#dashboard_editor_wrapper {
+    min-height: 40px; 
+    border: 2px dashed lightgray;
+    margin: 10px 0px;
+}

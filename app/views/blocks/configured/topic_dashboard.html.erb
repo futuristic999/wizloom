@@ -1,0 +1,56 @@
+<p>block_dashboard.html.erb
+<script>
+  $(document).ready(function() {
+    console.log("board_dashboard setting data..."); 
+    var blockContainer = $("#block_container_<%= @block[:id] %>");
+    console.log("blockContainer=" + blockContainer);  
+    blockContainer.data("block_data" , <%= @block.to_json.html_safe %> ); 
+    console.log(blockContainer.data()); 
+  
+    $("#select_topic_template").live({
+        click : function(event) {
+            console.log("select_topic_template clicked."); 
+            var topicId = $("#select_topic_template option:selected").attr("value"); 
+            console.log("topicId=" + topicId); 
+            var topic = blockContainer.data()['block_data']['topic_map'][topicId]; 
+            console.log("topic=" + topic); 
+            var templateId = topic['template_id']; 
+            console.log("template_id=" + templateId); 
+            
+            if (templateId!=null) {
+                showTemplate(templateId, $("#dashboard_editor_wrapper"));     
+            }
+        }
+    }); 
+  
+  }); 
+
+</script>
+
+
+<div id='block_container_<%= @block[:id] %>' class='block_container'>
+    <div class='block_title'><%= @block[:name] %>s</div>
+    
+    <div class'block_actions'>
+        <select id='select_topic_template'>
+            <option value='Select a Template'>Select a Template</option>
+            <% @block[:topic_map].each do |topicId, topic| %>
+                <option value='<%= topic[:id] %>'><%= topic[:name] %></option>
+            <% end %>
+
+        </select>
+
+     </div>
+
+    <div id="dashboard_editor_wrapper">
+    </div>
+    
+
+    <div id="dashboard_feeds">
+        <%= getFeedsHtml(@block[:topic_map].keys) %>
+    </div>
+
+
+
+
+</div>

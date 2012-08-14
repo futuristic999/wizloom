@@ -1,0 +1,30 @@
+<p>/topics/show.html.erb
+
+<div class='main_content'>
+  <div class='topics_header'>
+    <ul id='topics'>
+        <li id='topic_<%= @topic.id %>' class='topic_name'><%= @topic.name %></li>
+        <% @subTopics.each do |sub_topic| %>
+            <li id='topic_<%= sub_topic.id %>' class='topic_name'><%= sub_topic.name %></li>
+        <% end %>
+
+     </ul>
+  </div>
+
+  <div class='editor_container'>
+    <div class='title entry_title'>
+        <input type='text' class='title_input entry_title_input prompt_text' value='Enter Title Here'/>
+    </div>
+
+    <div class='editor_controls'>
+        <div class='templates_select_wrapper' style='margin-top:5px'>
+            <%= render :partial=>"templates/templates_select", :locals=>{:templates=>@templates, :divId=>'topic_templates_select'} %>
+        </div>
+    </div>
+
+    <div id='topic_editor_area' class='editor_area'>
+    </div>
+  
+  </div>
+</div>
+

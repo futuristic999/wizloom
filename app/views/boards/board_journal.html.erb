@@ -1,0 +1,36 @@
+<p>/boards_journal.html.erb
+
+
+<script>
+    var config = {
+      topic: 'career',
+          
+        
+        
+    }; 
+    
+    $(function() {
+        $( "#datepicker" ).datepicker({
+            onSelect: handleCalendarSelect
+
+        });
+    });
+    
+    function handleCalendarSelect(dateText, inst) {
+        console.log("In handleCalendarSelect(), dateText=" + dateText); 
+        console.log("Year=" + inst.selectedYear+ ", month=)" + inst.selectedMonth+", day=" + inst.selectedDay); 
+    }; 
+</script>
+
+
+<div class='board_container'>
+  <div class="calendar_actions">
+
+    <p>Date: <input id="datepicker" type="text"></p>
+
+  </div>
+
+  <div class='board_content'>
+
+  </div>
+</div>

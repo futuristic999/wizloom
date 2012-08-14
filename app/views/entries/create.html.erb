@@ -1,0 +1,43 @@
+
+
+
+<div id='entry_editor_container' class='editor_container'>
+  <div id='template_container_<%= @template.id %>' class='template_container'>
+   <%= render :partial=>"templates/table_format", 
+              :locals=>{
+                   :template=>@template,
+                   :context=>{:mode=>'display'}
+              }
+   %> 
+  </div>
+
+</div>
+
+    <script type='text/javascript'>
+        $(function(){
+            console.log("In entries/create.html.erb"); 
+            
+            var createEntryCallback = function(result){
+                console.log("createEntryCallback");
+                console.log("result=" + result); 
+                var entryHtml = result['entry_html']; 
+                var entryId = result['context']['entry_id']; 
+                console.log("entryId=" + entryId); 
+                window.location.replace("/entries/show/"+entryId); 
+            }; 
+
+            var saveButton = $(".save_entry_button"); 
+            
+            saveButton.live({
+                click: function(event){
+                    event.preventDefault(); 
+                    console.log("save_entry_button clicked");
+                    var templateId = $(".save_entry_button").attr("data-template_id"); 
+                    console.log("templateId=" + templateId); 
+                    
+                    var templateContainer = $("#template_container_" + templateId); 
+                    saveEntry(templateContainer, templateId, createEntryCallback); 
+                }
+            }); 
+        });  
+    </script>
