@@ -156,6 +156,44 @@ ul {
     min-height: 15px;
     width: 90%;
 }
-.search_box{
-    width: 90%;
+
+
+.top-actions-container {
+    text-align: right;
+    border: 1px solid lightgray;
+    float: right;
+
+}
+
+.search-and-add-container {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 0.5);
+    color: #333333;
+    height: 35px;
+    margin: padding;
+    overflow: hidden;
+    position: relative;
+    text-align: left;
+    text-shadow: none;
+    width: 500px;
+}
+
+.search-and-add-container > .search-and-add-action {
+    display: inline-block;
+    height: 30px;
+}
+
+.quick-add-button {
+    background-color: lightgray;
+    padding: 10px;
+    margin: 2px;
+    width: 58px;
+    text-align: left;
+}
+.search-and-add-box{
+    height: 100%;
+    padding: 5px;
 }

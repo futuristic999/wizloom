@@ -5,9 +5,24 @@ class ApplicationController < ActionController::Base
     helper_method :getEntryHtml
     helper_method :getBlockHtml
     helper_method :getFeedsHtml
+    helper_method :get_entries
+    helper_method :get_entry_types
+
+
+    def get_entries(filter)
+        puts "In ApplicationController.get_entries"
+        return Entry.all
+    end
+
+
+    def get_entry_types(filter)
+        return EntryType.all
+    end
 
     def saveEntry(params)
         puts "ApplicationController.saveEntry called. params=#{params}"
+
+
         templateId = params[:template_id];
         template = Template.find(templateId)
         fields = template.fields
@@ -278,7 +293,11 @@ class ApplicationController < ActionController::Base
     end
 
     def getAssociatedEntries(entryId,associatedEntryTemplateId)
-       entries = Entry.find(entryId).associated_entries.where(:template_id=>associatedEntryTemplateId)
+       if associatedEntryTemplateId == nil 
+         entries = Entry.find(entryId).associated_entries
+       else 
+         entries = Entry.find(entryId).associated_entries.where(:template_id=>associatedEntryTemplateId)
+       end
        return entries
 =begin
        entries = Hash.new

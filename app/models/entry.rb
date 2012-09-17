@@ -1,7 +1,9 @@
 
 class Entry < ActiveRecord::Base
-  has_many :fieldValues,  :dependent => :destroy
+  has_many  :fieldValues,  :dependent => :destroy
+  has_many  :entry_data, :class_name=>"EntryData",  :dependent => :destroy
 
+  has_many  :entry_properties, :class_name=>"EntryProperty", :dependent => :destroy
   has_many  :entry_associations, 
             :foreign_key => "entry_id",
             :class_name => "EntryAssociation"

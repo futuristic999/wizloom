@@ -1,16 +1,5 @@
-
-<div class='main_column'> 
-    <div id='editor_main' class='editor_wrapper'>
-
-            <%= render :partial=>"templates/templates_select", :locals=>{
-                            :templates=>@templates} 
-             %>
-    </div>
-
-    <div class='entries_container'>
-        <%= render :partial => "entries/entries_full", :locals => {
-                :entries => @entries }
-        %>
-    </div>
-    
+<div class='blog-container'>
+    <%= render :partial => "shared/top_actions_container" %>
 </div>
+
+

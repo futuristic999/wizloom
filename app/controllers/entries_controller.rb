@@ -1,5 +1,6 @@
 class EntriesController < ApplicationController
 
+
   def index
     @templates = Template.all()
     render :template => "/entries/index.html.erb"
@@ -7,12 +8,71 @@ class EntriesController < ApplicationController
 
 
   #Displays the entry create page
+=begin
   def create
     templateId = params[:template_id]
     @template = Template.find(templateId)
     render :template => "/entries/create.html.erb"
     
   end
+=end
+
+  def create
+      puts "In entries#create, params=#{params}"
+      entry_type_id = params[:entry_type]
+
+      @entry_type = EntryType.find(entry_type_id)
+
+      template_name = @entry_type.template.name
+
+       
+      @entry = initialize_entry(@entry_type, @entry_type.properties)
+      @context = {:display_mode => 'new'   
+                 }
+       
+
+
+      template = "/templates/predefined/#{template_name}.html.erb"
+      entry_html = render_to_string(:template=>template, 
+                                    :layout=>false,
+                                    )
+
+      
+
+
+      render :json => {
+            :entry_html => entry_html
+      }
+  end
+
+
+
+  #Create an empty entry for a given entry_type
+  #The entry_id is 0, and value=entry_type.default_value
+  def initialize_entry(entry_type, entry_type_properties)
+      puts "IN create_new_entry, entry_type=#{entry_type}, entry_type_properties=#{entry_type_properties}"
+      entry = Hash.new
+      entry_properties_map = Hash.new
+      entry_type_properties.each do |property|
+        propMap = {
+            :id    => property[:id],
+            :entry_id => 0,
+            :entry_type_id => entry_type[:id],
+            :label => property[:name],
+            :data_type  => property[:data_type],
+            :value => property[:default_value],
+            :options => property[:options],
+            :unit => property[:unit],
+            :display_mode => "edit"
+        }
+        entry_properties_map[property.name.to_sym] = propMap
+      end
+      entry[:properties] = entry_properties_map
+
+      return entry
+  end
+
+
 
 
   # Save an entry
@@ -62,6 +122,18 @@ class EntriesController < ApplicationController
     end
 
  end
+
+
+  def associate
+    addAssociatedEntry(params[:entry_id], params[:associated_entry_id])
+    associated_entries = getAssociatedEntries(params[:entry_id], nil)
+    
+    html = render_to_string(:template => "entries/_associated_entries.html.erb",:locals=>{:associated_entries=>associated_entries},  :layout=>false); 
+    if request.xhr? 
+       render :json => {:html=> html, :associated_entries => associated_entries} 
+    end 
+  end
+
 
   def new
     

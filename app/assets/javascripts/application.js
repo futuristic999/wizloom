@@ -1,4 +1,4 @@
-   
+  
    
     //show a template in the specified container
     function getTemplate(templateId,container) {

@@ -21,9 +21,11 @@ function addAssociation(entryId, assocEntryId, callback){
     console.log("In addAssociation"); 
     console.log("entryId=" + entryId + ", assocEntryId=" + assocEntryId); 
 
-    var url = "/entries/handle?action=associate&entry_id=" + entryId+"&assoc_entry_id="+assocEntryId); 
+    var url = "/entries/associate?entry_id=" + entryId+"&associated_entry_id="+assocEntryId;  
     $.ajax({
-        
+       url: url,
+       type: "GET",
+       success: callback
 
     }); 
 
@@ -35,6 +37,16 @@ $(document).ready(function() {
     var primaryEntryId = 0; 
 
     console.log("In entries.js document ready()");
+
+    /**
+        The "New Entry" button that appears on each page
+        Clicking "New Entry" will display the entry_types 
+    */
+    $("#new-entry-button").click(function(evt){
+       evt.preventDefault();
+       console.log("new-entry-button clicked"); 
+    }),
+
 
 
     $("#select_template option").click(function(){

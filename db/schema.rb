@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120720164052) do
+ActiveRecord::Schema.define(:version => 20120910165714) do
 
   create_table "blocks", :force => true do |t|
     t.string   "entry_type"
@@ -43,12 +43,27 @@ ActiveRecord::Schema.define(:version => 20120720164052) do
     t.integer  "topic_id"
   end
 
+  create_table "books", :force => true do |t|
+    t.string "name"
+    t.string "book_type"
+    t.string "topic_ids"
+    t.string "display"
+  end
+
   create_table "comments", :force => true do |t|
     t.string   "body"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "field_id"
+  end
+
+  create_table "data_keys", :force => true do |t|
+    t.string "key"
+    t.string "default_value"
+    t.string "options"
+    t.string "data_type"
+    t.string "unit"
   end
 
   create_table "entries", :force => true do |t|
@@ -75,6 +90,39 @@ ActiveRecord::Schema.define(:version => 20120720164052) do
     t.integer "list_id"
     t.string  "association_type"
     t.integer "display_order"
+  end
+
+  create_table "entry_data", :force => true do |t|
+    t.integer "entry_id"
+    t.integer "data_id"
+    t.string  "data_key"
+    t.string  "data_value"
+    t.date    "journal_date"
+  end
+
+  create_table "entry_properties", :force => true do |t|
+    t.integer "entry_id"
+    t.integer "property_id"
+    t.string  "property_name"
+    t.string  "property_value"
+  end
+
+  create_table "entry_type_properties", :force => true do |t|
+    t.integer "entry_type_id"
+    t.string  "name"
+    t.string  "default_value"
+    t.string  "options"
+    t.string  "data_type"
+    t.string  "unit"
+    t.string  "key"
+  end
+
+  create_table "entry_types", :force => true do |t|
+    t.string  "type_code"
+    t.integer "default_template_id"
+    t.string  "template_ids"
+    t.integer "owner_id"
+    t.string  "name"
   end
 
   create_table "feeds", :force => true do |t|
@@ -153,6 +201,13 @@ ActiveRecord::Schema.define(:version => 20120720164052) do
     t.integer  "user_id"
     t.integer  "owner_id"
     t.integer  "field_id"
+  end
+
+  create_table "template_data_keys", :force => true do |t|
+    t.integer "template_id"
+    t.integer "data_key_id"
+    t.string  "label"
+    t.integer "display_order"
   end
 
   create_table "templates", :force => true do |t|

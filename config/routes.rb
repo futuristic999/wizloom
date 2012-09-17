@@ -1,5 +1,9 @@
 Wizloom::Application.routes.draw do
 
+  match "journals/sandbox/test_journal"     => "journals#testExerciseJournal"
+  match "tests/running_log_input_mode"      => "tests#runningLogInputMode"
+  match "tests/tableless"                   => "tests#testTablelessTemplate"
+
   match "topics"            => "topics#index"
   match "topics/show/:id"   => "topics#show"
 
@@ -32,6 +36,7 @@ Wizloom::Application.routes.draw do
   match "entries/new"       => "entries#new"
   match "entries/create"    => "entries#create"
   match "entries/save"      => "entries#save"
+  match "entries/associate" => "entries#associate"
   match "entries/get/:id"   => "entries#get"
   match "entries/list"      => "entries#list"
   match "entries/delete/:id"    => "entries#delete"

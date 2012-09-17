@@ -23,19 +23,14 @@
         </div>
 
         <div class="ui-widget">
-            <input type='text' id='association_search_box' class='search_box'/>
+            <input type='text' id='association_search_box' data-entry_id=<%= @entry.id %> class='search_box'/>
         </div>
             
     </div>
 
+
     <div class='associated_entries'>
-        <% @entry.associated_entries.each do |entry| %>
-            <div class='entry_tag_container'>
-                           <%= render :partial=>"entries/entry_summary",
-                                           :locals=>{:entry=>entry}
-                           %>
-            </div>
-        <% end %>
+        <%= render :partial=>"entries/associated_entries", :locals=>{:associated_entries => @entry.associated_entries} %>
     </div>
 </div>
 
@@ -49,8 +44,12 @@
         "All"
       ];   
 
-      var addAssociationCallback = function(entryId, assocEntryId){
-
+      var addAssociationCallback = function(response){
+        console.log("In addAssociationCallback"); 
+        var html = response['html']
+        console.log('html=' + html);
+        var newDiv = $("<div class='associated_entries'></div>").append(html); 
+        $(".associated_entries").replaceWith(newDiv); 
       }; 
 
       $("#association_search_box").autocomplete({
@@ -62,7 +61,7 @@
         console.log("Clicked item " + ui.item.value);
         var assocEntryId = ui.item.value;
         var entryId = $("#association_search_box" ).attr("data-entry_id"); 
-        addAssociation(entryId, assocEntryId); 
+        addAssociation(entryId, assocEntryId, addAssociationCallback); 
         }); 
 
      $('.add_association').click(function(evt){
