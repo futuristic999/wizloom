@@ -3,6 +3,7 @@ Wizloom::Application.routes.draw do
   match "journals/sandbox/test_journal"     => "journals#testExerciseJournal"
   match "tests/running_log_input_mode"      => "tests#runningLogInputMode"
   match "tests/tableless"                   => "tests#testTablelessTemplate"
+  match "tests/editor"                       => "tests#testEditor"
 
   match "topics"            => "topics#index"
   match "topics/show/:id"   => "topics#show"

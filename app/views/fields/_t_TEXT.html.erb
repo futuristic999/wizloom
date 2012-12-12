@@ -1,0 +1,8 @@
+
+<div class='t-value' style="visibility:<%= context[:value_visibility] %>">
+  <%= property[:value] %>
+</div>
+<div id=<%= "#{property[:entry_id]}_#{property[:entry_type_id]}_#{property[:id]}" %> 
+    class="t-input" style="visiblity:<%= context[:input_visibility] %>">
+      <input id='0' class='t-property t-text' type='text' value="<%= property[:value] %>"></input>
+</div>

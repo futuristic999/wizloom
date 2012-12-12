@@ -1,0 +1,15 @@
+<p>Beejii Editor /mockups/test_beejii_editor.html
+
+<div id="test-editor-container">
+    <div id="my-editor">
+    </div>
+</div>
+
+<script>
+$(function (){
+    console.log("In test_beejii_editor");
+    $( "#my-editor" ).beejiieditor( {
+        templateSource : "/entries/create?entity_id=1"
+    });
+});
+</script>

@@ -19,60 +19,59 @@ class EntriesController < ApplicationController
 
   def create
       puts "In entries#create, params=#{params}"
-      entry_type_id = params[:entry_type]
+      entity_id = params[:entity_id]
+=begin
+      @entity = Entity.find(entity_id)
+      template_name = @entity.template.name
 
-      @entry_type = EntryType.find(entry_type_id)
-
-      template_name = @entry_type.template.name
-
-       
-      @entry = initialize_entry(@entry_type, @entry_type.properties)
+      @entry = EntryManager.initialize_entry(@entity)
+=end
+      @entity = Entity.find(entity_id)
+      @entry = Entry.new({:entity_id => entity_id})
+            
       @context = {:display_mode => 'new'   
                  }
        
-
-
-      template = "/templates/predefined/#{template_name}.html.erb"
+      template = "/templates/predefined/#{@entity.template.name}.html.erb"
       entry_html = render_to_string(:template=>template, 
                                     :layout=>false,
                                     )
 
       
-
+      @entry[:html] = entry_html
+      @entry[:attr_values] = @entry.attr_values
+      @entry[:attrs] = @entity.attrs
 
       render :json => {
-            :entry_html => entry_html
+            :entry      => @entry
+
       }
   end
 
 
-
+=begin
   #Create an empty entry for a given entry_type
   #The entry_id is 0, and value=entry_type.default_value
-  def initialize_entry(entry_type, entry_type_properties)
+  def initialize_entry(entity_id)
       puts "IN create_new_entry, entry_type=#{entry_type}, entry_type_properties=#{entry_type_properties}"
-      entry = Hash.new
-      entry_properties_map = Hash.new
-      entry_type_properties.each do |property|
-        propMap = {
-            :id    => property[:id],
-            :entry_id => 0,
-            :entry_type_id => entry_type[:id],
-            :label => property[:name],
-            :data_type  => property[:data_type],
-            :value => property[:default_value],
-            :options => property[:options],
-            :unit => property[:unit],
-            :display_mode => "edit"
-        }
-        entry_properties_map[property.name.to_sym] = propMap
+      entity = Entity.find(entity_id)
+
+      entry = Entry.new
+      entry.entity_id = entity_id
+
+      attributes = entity.attributes
+
+      entity.attributes.each do |attribute|
+        attr_value = AttributeValue.new({
+            :attribute_id => attribute.id, 
+            :value => attribute.default_value
+        })
+        entry.attribute_values.push(attr_value)
       end
-      entry[:properties] = entry_properties_map
-
+           
       return entry
-  end
 
-
+=end
 
 
   # Save an entry
@@ -244,9 +243,5 @@ class EntriesController < ApplicationController
 
   end
 
-
-  def getRelatedEntries(entryId)
-
-  end
 
 end

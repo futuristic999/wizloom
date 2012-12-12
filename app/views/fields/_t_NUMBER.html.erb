@@ -1,0 +1,11 @@
+
+<div class='t-value' style="visibility:<%= context[:value_visibility] %>">
+  <%= attr_value[:value] %> <span class="t-unit"><%= attr[:unit] %></span>
+</div>
+
+<div id=<%= "#{attr_value[:entry_id]}_#{attr[:entity_id]}_#{attr[:id]}" %> 
+    class="t-input" style="visiblity:<%= context[:input_visibility] %>">
+      <input id='0' class='t-property t-text' type='text' value="<%= attr_value[:value] %>"></input>
+      <span class="t-unit"><%= attr[:unit] %><span>
+</div>
+

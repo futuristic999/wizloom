@@ -1,0 +1,29 @@
+<style>
+  .left-sidebar {
+    min-height: 120px;
+  }
+</style>
+
+
+
+
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span3 left-sidebar">
+              <div class="journal-controls">
+                 <p><input type="text" id="datepicker"></p>     
+              </div>
+            </div>
+            <div class="span9">
+              <%= template[:html] %>
+            </div>
+         </div>
+    </div>
+
+<script>
+$(function() {
+  console.log("document is ready"); 
+  $("#datepicker").datepicker(); 
+}); 
+</script>

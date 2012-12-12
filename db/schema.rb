@@ -11,7 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120910165714) do
+ActiveRecord::Schema.define(:version => 20121009173324) do
+
+  create_table "attr_values", :force => true do |t|
+    t.integer "entry_id"
+    t.integer "attr_id"
+    t.string  "value"
+    t.string  "value_type"
+  end
+
+  create_table "attrs", :force => true do |t|
+    t.integer "entity_id"
+    t.string  "name"
+    t.string  "label"
+    t.string  "default_value"
+    t.string  "options"
+    t.string  "unit"
+    t.string  "value_type"
+    t.integer "display_order"
+  end
 
   create_table "blocks", :force => true do |t|
     t.string   "entry_type"
@@ -66,6 +84,13 @@ ActiveRecord::Schema.define(:version => 20120910165714) do
     t.string "unit"
   end
 
+  create_table "entities", :force => true do |t|
+    t.string  "name"
+    t.string  "description"
+    t.integer "template_id"
+    t.integer "owner_id"
+  end
+
   create_table "entries", :force => true do |t|
     t.string   "title"
     t.text     "body"
@@ -79,6 +104,7 @@ ActiveRecord::Schema.define(:version => 20120910165714) do
     t.string   "entry_type"
     t.string   "descriptor"
     t.string   "topic_ids"
+    t.integer  "entity_id"
   end
 
   add_index "entries", ["fieldvalues_id"], :name => "index_entries_on_fieldvalues_id"

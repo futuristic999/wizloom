@@ -1,0 +1,97 @@
+<style>
+   
+    .templated-entry {
+        border: 1px solid lightgray;
+        padding: 10px 10px;
+    }
+
+    #test-template {
+        margin-left: 200px;
+        border: 1px solid lightgray;
+        width: 600px;
+    }
+
+    .template-container {
+        padding: 5px;
+    }
+ 
+    .t-header {
+        background-color: transparent;
+    }
+  
+    .t-row{
+        margin-bottom: 5px;
+    }
+
+    .t-label {
+        display: block;
+        width:140px;
+        float:left;
+        margin-right: 20px;
+        font-weight: bold;
+        text-align:right;
+        background-color: lightgray;
+    }
+    .t-field {
+        width: 100%;
+    }
+    .t-text{
+        min-width: 100px;
+    }
+    .num-text{
+        width: 50px;
+    }
+    .t-field textarea{
+    }
+    .t-button {
+        width: 100px;
+    }
+</style>   
+
+
+<% 
+
+    if @context[:display_mode] == "display"
+       @context[:value_visibility] = "visible"
+       @context[:input_visibility] = "hidden"
+    else 
+       @context[:value_visibility] = "hidden"
+       @context[:input_visibility] = "visible"
+    end 
+
+%>
+
+
+<!--<div class='fluid-container'> -->
+ <div class="entry-container"> 
+  <div id="test-template" class='template-container'> 
+    <header class='t-header'>
+      <h2 class="label text heading inset centered"><%= @entry.entity.name %></h2>
+    </header>
+
+    <div class="template-content">
+      <% @entry.attr_values.each do |attr_value| %>
+          <div class="t-row">
+              <label class="label t-label" for="<%= attr_value.attr.id %>">
+                    <%= attr_value.attr.label %>
+               </label>
+              <div id="t-field-<%= attr_value.attr.id %>-<%= attr_value.id == nil ? 0 : attr_value.id %>" class="t-field">
+                  <%= render :partial => "fields/t_#{attr_value.attr.value_type}", 
+                             :locals => { 
+                                          :attr_value => attr_value,
+                                          :attr => attr_value.attr,
+                                          :context => @context
+                                        }
+                  %>
+              </div>
+           </div>
+      <% end %>
+
+    </div> <!-- end of template-container -->  
+      
+     <div class="entry-actions">
+        <button type="submit" id="save-entry-button" class="t-butotn save-button">Save</button>
+     </div>
+  </div> <!-- end of entry-container -->
+<!--</div> <!-- end of fluid-container -->  
+   

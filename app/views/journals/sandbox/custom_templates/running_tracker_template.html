@@ -1,0 +1,42 @@
+<style>
+    
+
+</style>    
+    
+    <table data-tname='Running Tracker Template'>
+        <tr class='t-row'>
+            <td class='t-d-label'>
+               <%= data_keys[:length][:label] %>
+            </td>
+            <td class='t-d-value'>
+               <%= entry_data[:length]  %>
+            </td>
+        </tr>
+
+        <tr class='t-row'>
+            <td class='t-d-label'>
+               <%= data_keys[:distance][:label] %>
+            </td>
+            <td class='t-d-value'>
+               <%= entry_data[:distance] %>
+            </td>
+        </tr>
+
+        <tr class='t-row'>
+            <td class='t-d-label'>
+                <%= data_keys[:difficulty][:label] %>
+            </td>
+            <td class='t-d-value'>
+                <%= entry_data[:difficulty] %>
+            </td>
+        </tr>
+
+        <tr class='t-row'>
+            <td class='t-d-label'>
+                <%= data_keys[:notes][:label] %>
+            </td>
+            <td class='t-d-value'>
+                <%= entry_data[:notes] %>
+            </td>
+        </tr>
+    </table>

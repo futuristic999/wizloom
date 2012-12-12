@@ -1,0 +1,130 @@
+<style>
+   
+    .templated-entry {
+        border: 1px solid lightgray;
+        padding: 10px 10px;
+    }
+
+    #test-template {
+        margin-left: 200px;
+        border: 1px solid lightgray;
+        width: 600px;
+    }
+
+    .template-container {
+        padding: 5px;
+    }
+ 
+    .t-header {
+        background-color: transparent;
+    }
+  
+    .t-row{
+        margin-bottom: 5px;
+    }
+
+    .t-label {
+        display: block;
+        width:140px;
+        float:left;
+        margin-right: 20px;
+        font-weight: bold;
+        text-align:right;
+        background-color: lightgray;
+    }
+    .t-field {
+        width: 100%;
+    }
+    .t-text{
+        min-width: 100px;
+    }
+    .num-text{
+        width: 50px;
+    }
+    .t-field textarea{
+    }
+    .t-button {
+        width: 100px;
+    }
+</style>   
+
+<div class='fluid-container'> 
+  <div id="test-template" class='template-container margin-400'> 
+    <header class='t-header'>
+      <h2 class="label text heading inset centered">My Running Log</h2>
+    </header>
+
+    <div class="template-content">
+      <div class="t-row">
+          <label class="label t-label" for="input1233444">Running Time</label>
+          <div class="t-field">
+              <input id="input1233444" class="t-text num-text" type="text" placeholder="10">
+              <span class="t-unit">Minutes</span>
+          </div>
+          
+      </div>
+
+      <div class="t-row">
+         <label class="label t-label" for="input1234">Distance</label>
+         <div class="t-field">
+            <input id="input1234" class="t-text num-text" type="text" placeholder="1.0">
+            <span class="t-unit">Miles</span>
+         </div>
+      </div>
+
+      <div class="t-row">
+        <label class="label t-label" for="input5678">Avg Pace</label>
+        <div class="t-field">
+            <input id="input5678" class="t-text num-text" type="text" placeholder="25.5">
+            <span class="t-unit">Minutes/Mile</span>
+        </div>
+      </div>
+
+      <div class="t-row">
+        <label class="label t-label" for="input4567">Difficulty</label>
+        <div class="t-field">
+            <select id="input4567" class="t-select">
+                <option value="Easy">Easy</option>
+                <option value="Mild">Mild</option>
+                <option value="Diffcult">Difficult</option>
+            </select>
+        </div>
+      </div>
+
+      <div class="t-row">
+        <label class="label t-label" for="input9087">Calories Burned</label>
+        <div class="t-field">
+            <input id="input9087" class="t-text num-text" type="text" placeholder="300">
+            <span class="t-unit">Kcal</span>
+        </div>
+      </div>
+
+
+      <div class="t-row">
+        <label class="label t-label" for="dk_103">Some Text Input</label>
+        <div class="t-field">
+           <input id="dk_103" class="t-text short-text" type="text" placeholder="Type some short text here">
+        </div>
+      </div>
+
+      <div class="t-row">
+        <label class="label t-label" for="dk_104">Location</label>
+        <div class="t-field">
+            <input id="dk_104" class="t-text location" type="text">
+        </div>
+      </div>
+
+      <div class="t-row">
+        <label class="label t-label" for="input2345">Notes</label>
+        <div class="t-field">
+            <textarea id="input2345" class="t-textarea"></textarea>
+            
+        </div>
+      </div>
+
+      <div class="t-row">
+        <button type="submit" class="t-butotn save-button">Save</button>
+      </div>
+    </div>
+  </div>
+   

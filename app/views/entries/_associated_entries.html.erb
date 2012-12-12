@@ -1,0 +1,7 @@
+ <% associated_entries.each do |entry| %>
+   <div class='entry_tag_container'>
+       <%= render :partial=>"entries/entry_summary",
+           :locals=>{:entry=>entry}
+        %>
+   </div>
+ <% end %>
